@@ -43,7 +43,7 @@ def delete_interface(request, interface_id):
     interface = InterfaceList.objects.get(pk=interface_id)
     if interface.owner == request.user:
         interface.delete()
-        messages.success(request, (f"Interface '{interface.interface}' is successfully deleted!"))
+        messages.success(request, (f"Interface '{interface.name}' is successfully deleted!"))
     else:
         messages.error(request, ("Access restricted, you are NOT allowed!"))
 
@@ -58,7 +58,7 @@ def edit_interface(request, interface_id):
         if form.is_valid():
             form.save()
 
-        messages.success(request, (f"Interface '{interface.interface}' is successfully updated!"))
+        messages.success(request, (f"Interface '{interface.name}' is successfully updated!"))
         return redirect('interfaces')
     else:
         interface_obj = InterfaceList.objects.get(pk=interface_id)
@@ -71,7 +71,7 @@ def complete_interface(request, interface_id):
     if interface.owner == request.user:
         interface.status = True
         interface.save()
-        messages.success(request, (f"Interface '{interface.interface}' is successfully completed"))
+        messages.success(request, (f"Interface '{interface.name}' is successfully completed"))
     else:
         messages.error(request, ("Access restricted, you are NOT allowed!"))
 
@@ -84,7 +84,7 @@ def pending_interface(request, interface_id):
     if interface.owner == request.user:
         interface.status = False
         interface.save()
-        messages.success(request, (f"Interface '{interface.interface}' is opened again"))
+        messages.success(request, (f"Interface '{interface.name}' is opened again"))
     else:
         messages.error(request, ("Access restricted, you are NOT allowed!"))
 

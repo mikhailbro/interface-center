@@ -15,7 +15,7 @@
                 {% csrf_token %}
                 <div class="input-group">
                 <div class="input-group-text">Interface Name</div>
-                <input type="text" class="form-control" name="interface" id="interface" placeholder="{{ interface_obj.interface }}" value="{{ interface_obj.interface }}">
+                <input type="text" class="form-control" name="name" id="name" placeholder="{{ interface_obj.name }}" value="{{ interface_obj.name }}">
                 <input type="hidden" class="form-control" name="status" id="status" placeholder="{{ interface_obj.status }}" value="{{ interface_obj.status }}">
                 <button type="submit" class="btn btn-primary">Edit Interface</button>
                 </div>

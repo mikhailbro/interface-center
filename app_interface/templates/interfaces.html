@@ -28,7 +28,7 @@
             {% csrf_token %}
             <div class="input-group">
               <div class="input-group-text">New Interface</div>
-              <input type="text" class="form-control" name="interface" id="interface" placeholder="Enter Interface Name">
+              <input type="text" class="form-control" name="name" id="name" placeholder="Enter Interface Name">
               <button type="submit" class="btn btn-primary">Add New Interface</button>
             </div>
         </form>
@@ -38,7 +38,7 @@
         <table class="table table-bordered table-hover text-center">
             <thead class="table-dark">
                 <tr scope="row">
-                    <th scope="col-4">Interface</th>
+                    <th scope="col-4">Name</th>
                     <th scope="col-3">Status</th>
                     <th scope="col-1">Edit</th>
                     <th scope="col-1">Delete</th>
@@ -49,7 +49,7 @@
                     {% for obj in interfaces %}
                         {% if obj.status %}    
                             <tr scope="row" class="table-success">
-                                <th scope="col-4"><del>{{ obj.interface }}</del></th>
+                                <th scope="col-4"><del>{{ obj.name }}</del></th>
                                 <td scope="col-3"><a href="{% url 'pending_interface' obj.id %}" class="btn btn-outline-success">&nbsp;&nbsp;Mark Interface pending&nbsp;&nbsp;</a></td>
                                 <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
                                 <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete Interface</a></td>
@@ -57,7 +57,7 @@
                             </tr>
                         {% else %}
                             <tr scope="row">
-                                <th scope="col-4">{{ obj.interface }}</th>
+                                <th scope="col-4">{{ obj.name }}</th>
                                 <td scope="col-3"><a href="{% url 'complete_interface' obj.id %}" class="btn btn-outline-success">Mark Interface completed</a></td>
                                 <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
                                 <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete interface</a></td>
