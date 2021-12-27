@@ -1,0 +1,27 @@
+{% extends 'app_base.html' %} 
+
+{% block title %}
+    <title>ACME IC - Edit Interface</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        </br>
+        <h1>Edit Interface</h1>
+        </br>
+
+        {% if interface_obj.owner == request.user %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                <div class="input-group-text">Interface Name</div>
+                <input type="text" class="form-control" name="interface" id="interface" placeholder="{{ interface_obj.interface }}" value="{{ interface_obj.interface }}">
+                <input type="hidden" class="form-control" name="status" id="status" placeholder="{{ interface_obj.status }}" value="{{ interface_obj.status }}">
+                <button type="submit" class="btn btn-primary">Edit Interface</button>
+                </div>
+            </form>
+        {% else %}
+            <p>Access restricted, you are NOT allowed!</p>
+        {% endif %}
+    </div>
+{% endblock content %}

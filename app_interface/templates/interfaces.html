@@ -1,0 +1,86 @@
+{% extends 'app_base.html' %} 
+
+{% block title %}
+    <title>ACME IC - Interfaces</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        </br>
+        <h1>ACME Interfaces</h1>
+        </br>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible fade show
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    alert-success" role="alert">
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    alert-danger" role="alert">
+                {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+              <div class="input-group-text">New Interface</div>
+              <input type="text" class="form-control" name="interface" id="interface" placeholder="Enter Interface Name">
+              <button type="submit" class="btn btn-primary">Add New Interface</button>
+            </div>
+        </form>
+
+        </br> </br>
+
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+                <tr scope="row">
+                    <th scope="col-4">Interface</th>
+                    <th scope="col-3">Status</th>
+                    <th scope="col-1">Edit</th>
+                    <th scope="col-1">Delete</th>
+                    <th scope="col-3">Owner</th>
+            </thead>
+            <tbody>
+                {% if interfaces %}
+                    {% for obj in interfaces %}
+                        {% if obj.status %}    
+                            <tr scope="row" class="table-success">
+                                <th scope="col-4"><del>{{ obj.interface }}</del></th>
+                                <td scope="col-3"><a href="{% url 'pending_interface' obj.id %}" class="btn btn-outline-success">&nbsp;&nbsp;Mark Interface pending&nbsp;&nbsp;</a></td>
+                                <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
+                                <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete Interface</a></td>
+                                <td scope="col-3">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
+                            </tr>
+                        {% else %}
+                            <tr scope="row">
+                                <th scope="col-4">{{ obj.interface }}</th>
+                                <td scope="col-3"><a href="{% url 'complete_interface' obj.id %}" class="btn btn-outline-success">Mark Interface completed</a></td>
+                                <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
+                                <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete interface</a></td>
+                                <td scope="col-3">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                {% if interfaces.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?pg=1"><<</a></li>
+                    <li class="page-item"><a class="page-link" href="?pg={{ interfaces.previous_page_number }}">{{ interfaces.previous_page_number }}</a></li>
+                {% endif %}
+                <li class="page-item active"><a class="page-link" href="?pg={{ interfaces.number }}">{{ interfaces.number }}</a></li>
+                {% if interfaces.has_next %}
+                    <li class="page-item"><a class="page-link" href="?pg={{ interfaces.next_page_number }}">{{ interfaces.next_page_number }}</a></li>
+                    <li class="page-item"><a class="page-link" href="?pg={{ interfaces.paginator.num_pages }}">>></a></li>
+                {% endif %}
+            </ul>
+          </nav>
+    </div>
+{% endblock content %}
