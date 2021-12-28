@@ -12,7 +12,7 @@ class Interface(models.Model):
     is_owned = models.BooleanField(default=True)
     created_at = models.DateField(default=datetime.date.today)
     production_start_at = models.DateField(default=datetime.date.today)
-    decommissioning_at = models.DateField(default=None)
+    decommissioning_at = models.DateField(null=True, blank=True, default=None)
     # business_domain = models.CharField(max_length=50)
     is_multi_provider = models.BooleanField(default=False)
     contract_description = models.URLField(max_length=200, verbose_name='Interface Contract URL', null=True, blank=True, default=None)
