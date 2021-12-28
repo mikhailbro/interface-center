@@ -12,8 +12,10 @@ class Interface(models.Model):
     is_owned = models.BooleanField(default=True)
     created_at = models.DateField(default=datetime.date.today)
     production_start_at = models.DateField(default=datetime.date.today)
-    decommissioning_at = models.DateField(default=datetime.date.today)
+    decommissioning_at = models.DateField(default=None)
     # business_domain = models.CharField(max_length=50)
+    is_multi_provider = models.BooleanField(default=False)
+    contract_description = models.URLField(max_length=200, verbose_name='Interface Contract URL', null=True, blank=True, default=None)
 
 
     class InterfaceStatusEnum(models.TextChoices):
@@ -24,6 +26,7 @@ class Interface(models.Model):
         RUECKZUG = 'RUECKZUG', ('Rueckzug')
         HISTORISCH = 'HISTORISCH', ('Historisch')
         ABGELEHNT = 'ABGELEHNT', ('Abgelehnt')
+
     status = models.CharField(
         max_length=16,
         choices=InterfaceStatusEnum.choices,
@@ -34,6 +37,7 @@ class Interface(models.Model):
         CODE = 'CODE', ('Code')
         CONTRACT = 'CONTRACT', ('Contract')
         MODEL = 'MODEL', ('Model')
+
     model_origin = models.CharField(
         max_length=10,
         choices=ModelOriginEnum.choices,
@@ -45,6 +49,7 @@ class Interface(models.Model):
         INTERNAL = 'INTERNAL', ('Internal')
         CONFIDENTIONAL = 'CONFIDENTIONAL', ('Confidentional')
         SECRET = 'SECRET', ('Secret')
+
     info_classification = models.CharField(
         max_length=20,
         choices=InfoClassificationEnum.choices,
@@ -55,12 +60,32 @@ class Interface(models.Model):
         TO_PROVIDER = 'TO_PROVIDER', ('To Provider')
         FROM_PROVIDER = 'FROM_PROVIDER', ('From Provider')
         BOTH_DIRECTIONS = 'BOTH_DIRECTIONS', ('Both Directions')
+
     infoflow_direction = models.CharField(
         max_length=20,
         choices=InfoflowDirectionEnum.choices,
         default=InfoflowDirectionEnum.BOTH_DIRECTIONS,
     )
 
+    class AccessibilityEnum(models.TextChoices):
+        DOMAIN_INTERNAL = 'DOMAIN_INTERNAL', ('Domain internal')
+        CROSS_DOMAIN = 'CROSS_DOMAIN', ('Cross domain')
+
+    accessibility = models.CharField(
+        max_length=20,
+        choices=AccessibilityEnum.choices,
+        default=AccessibilityEnum.DOMAIN_INTERNAL,
+    )
+
+    class CommunicationPatternEnum(models.TextChoices):
+        REQUEST_REPLY = 'REQUEST_REPLY', ('Request-Reply')
+        FIRE_FORGET = 'FIRE_FORGET', ('Fire-Forget')
+
+    communication_pattern = models.CharField(
+        max_length=20,
+        choices=CommunicationPatternEnum.choices,
+        default=CommunicationPatternEnum.REQUEST_REPLY,
+    )
 
     def __str__(self):
         return self.name + "- " + str(self.status)
