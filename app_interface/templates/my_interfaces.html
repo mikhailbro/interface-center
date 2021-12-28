@@ -1,0 +1,103 @@
+{% extends 'app_base.html' %} 
+
+{% block title %}
+    <title>ACME IC - My Interfaces</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        </br>
+        <h1>Meine Interfaces</h1>
+        </br>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible fade show
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    alert-success" role="alert">
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    alert-danger" role="alert">
+                {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+
+        <form method="GET">
+            {% csrf_token %}
+            <div class="d-flex input-group">
+                <input type="search" class="form-control" name="search" id="search" placeholder="Suche Interfaces..." value="{{ search }}">
+                <button type="submit" class="btn btn-primary btn-lg">Suche</button>
+            </div>
+        </form>
+
+
+        {% if interfaces %}
+            </br> </br>
+            <p><b>Interfaces gefunden: {{ interfaces|length }}</b></p>
+            <table class="table table-bordered table-hover text-center">
+                <thead class="table-dark">
+                    <tr scope="row">
+                        <th scope="col-4">Name</th>
+                        <th scope="col-3">ACME Interface</th>
+                        <th scope="col-1">Edit</th>
+                        <th scope="col-1">Delete</th>
+                        <th scope="col-3">Owner</th>
+                </thead>
+                <tbody>
+                    {% for obj in interfaces %}
+                        {% if obj.isOwned %}    
+                            <tr scope="row" class="table-success">
+                                <td scope="col-4"><del>{{ obj.name }}</del></th>
+                                <td scope="col-3"><a href="{% url 'pending_interface' obj.id %}" class="btn btn-outline-success">&nbsp;&nbsp;Mark Interface pending&nbsp;&nbsp;</a></td>
+                                <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
+                                <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete Interface</a></td>
+                                <td scope="col-3">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
+                            </tr>
+                        {% else %}
+                            <tr scope="row">
+                                <td scope="col-4">{{ obj.name }}</th>
+                                <td scope="col-3"><a href="{% url 'complete_interface' obj.id %}" class="btn btn-outline-success">Mark Interface completed</a></td>
+                                <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
+                                <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete interface</a></td>
+                                <td scope="col-3">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    {% if interfaces.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?pg=1"><<</a></li>
+                        <li class="page-item"><a class="page-link" href="?pg={{ interfaces.previous_page_number }}">{{ interfaces.previous_page_number }}</a></li>
+                    {% endif %}
+                    <li class="page-item active"><a class="page-link" href="?pg={{ interfaces.number }}">{{ interfaces.number }}</a></li>
+                    {% if interfaces.has_next %}
+                        <li class="page-item"><a class="page-link" href="?pg={{ interfaces.next_page_number }}">{{ interfaces.next_page_number }}</a></li>
+                        <li class="page-item"><a class="page-link" href="?pg={{ interfaces.paginator.num_pages }}">>></a></li>
+                    {% endif %}
+                </ul>
+            </nav> 
+        {% else %}
+            </br> </br>
+            <div class="alert alert-primary" role="alert">
+                Keine eigenen Interfaces vorhanden
+            </div>
+        {% endif %}   
+
+        </br></br>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+            <div class="input-group-text">Neues Interface</div>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Trage bitte einen Interface Namen ein">
+            <button type="submit" class="btn btn-primary">Neues Interface speichern</button>
+            </div>
+        </form>
+
+    </div>
+{% endblock content %}

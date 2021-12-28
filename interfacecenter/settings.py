@@ -124,7 +124,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-LOGIN_REDIRECT_URL = 'interfaces'
+LOGIN_REDIRECT_URL = 'my_interfaces'
 LOGIN_URL = 'login'
 django_heroku.settings(locals())
 

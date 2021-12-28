@@ -26,4 +26,5 @@ urlpatterns = [
     path('interfaces/', include('app_interface.urls')),
 
     path('account/', include('app_user.urls')),
+
 ]

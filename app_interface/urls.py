@@ -4,7 +4,7 @@ from app_user import views as users_views
 
 
 urlpatterns = [
-    path('', interface_views.interfaces, name='interfaces'),
+    path('', interface_views.my_interfaces, name='my_interfaces'),
     path('delete/<interface_id>', interface_views.delete_interface, name='delete_interface'),
     path('edit/<interface_id>', interface_views.edit_interface, name='edit_interface'),
     path('complete/<interface_id>', interface_views.complete_interface, name='complete_interface'),
