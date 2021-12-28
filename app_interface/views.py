@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from app_interface.models import Interface as InterfaceList
+from app_interface.models import Interface
 from app_interface.forms import InterfaceForm
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     # ALL INTERFACES:
-    all_interfaces = InterfaceList.objects.all()
+    all_interfaces = Interface.objects.all()
     # Pagination:
     paginator_all_interfaces = Paginator(all_interfaces, 10)
     page = request.GET.get('pg')
@@ -31,7 +31,7 @@ def my_interfaces(request):
         return redirect('my_interfaces')
     else:
         # MY INTERFACES:
-        my_interfaces = InterfaceList.objects.filter(owner=request.user)
+        my_interfaces = Interface.objects.filter(owner=request.user)
         # Pagination:
         paginator_my_interfaces = Paginator(my_interfaces, 10)
         page = request.GET.get('pg')
@@ -42,7 +42,7 @@ def my_interfaces(request):
       
 @login_required
 def delete_interface(request, interface_id):
-    interface = InterfaceList.objects.get(pk=interface_id)
+    interface = Interface.objects.get(pk=interface_id)
     if interface.owner == request.user:
         interface.delete()
         messages.success(request, (f"Interface '{interface.name}' is successfully deleted!"))
@@ -55,7 +55,7 @@ def delete_interface(request, interface_id):
 @login_required
 def edit_interface(request, interface_id):
     if request.method == "POST":
-        interface = InterfaceList.objects.get(pk=interface_id)
+        interface = Interface.objects.get(pk=interface_id)
         form = InterfaceForm(request.POST or None, instance = interface)
         if form.is_valid():
             form.save()
@@ -63,13 +63,13 @@ def edit_interface(request, interface_id):
         messages.success(request, (f"Interface '{interface.name}' is successfully updated!"))
         return redirect('my_interfaces')
     else:
-        interface_obj = InterfaceList.objects.get(pk=interface_id)
+        interface_obj = Interface.objects.get(pk=interface_id)
         return render(request, 'edit.html', {'interface_obj': interface_obj})
 
 
 @login_required
 def complete_interface(request, interface_id):
-    interface = InterfaceList.objects.get(pk=interface_id)
+    interface = Interface.objects.get(pk=interface_id)
     if interface.owner == request.user:
         interface.isOwned = True
         interface.save()
@@ -82,7 +82,7 @@ def complete_interface(request, interface_id):
 
 @login_required
 def pending_interface(request, interface_id):
-    interface = InterfaceList.objects.get(pk=interface_id)
+    interface = Interface.objects.get(pk=interface_id)
     if interface.owner == request.user:
         interface.isOwned = False
         interface.save()
