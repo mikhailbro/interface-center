@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # CUSTOMIZING:
-    'django_filter',
     'app_interface',
     'app_user',
     'crispy_forms',

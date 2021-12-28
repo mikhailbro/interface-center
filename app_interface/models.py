@@ -9,14 +9,25 @@ class Interface(models.Model):
     name = models.CharField(max_length=100)
     version = models.PositiveIntegerField(default=1)
     description = models.TextField(max_length=500, default='')
-    is_owned = models.BooleanField(default=True)
+    owned_interface = models.BooleanField(default=True)
     created_at = models.DateField(default=datetime.date.today)
     production_start_at = models.DateField(default=datetime.date.today)
     decommissioning_at = models.DateField(null=True, blank=True, default=None)
     # business_domain = models.CharField(max_length=50)
-    is_multi_provider = models.BooleanField(default=False)
+    multi_provider = models.BooleanField(default=False)
     contract_description = models.URLField(max_length=200, verbose_name='Interface Contract URL', null=True, blank=True, default=None)
+    
+    restriction = models.BooleanField(default=False)
+    restriction_text = models.TextField(max_length=300, null=True, blank=True, default=None)
+    class RestrictionCodeEnum(models.TextChoices):
+        NUTZUNG = 'NUTZUNG', ('Nutzung')
+        TEST = 'TEST', ('Test')
 
+    restriction_code = models.CharField(
+        max_length=20,
+        choices=RestrictionCodeEnum.choices,
+        null=True, blank=True, default=None
+    )
 
     class InterfaceStatusEnum(models.TextChoices):
         EINGANG = 'EINGANG', ('Eingang')
