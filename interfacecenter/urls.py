@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import include, path
 
 from app_interface import views as interface_views
+from app_implementation import views as implementation_views
+from app_application import views as application_views
+from app_review import views as review_views
 from app_user import views as user_views
 
 urlpatterns = [
@@ -25,6 +28,9 @@ urlpatterns = [
     path('', interface_views.index, name='index'),
     path('interfaces/', include('app_interface.urls')),
 
-    path('account/', include('app_user.urls')),
+    path('implementations/', include('app_implementation.urls')),
+    path('applications/', include('app_application.urls')),
+    path('reviews/', include('app_review.urls')),
 
+    path('account/', include('app_user.urls')),
 ]

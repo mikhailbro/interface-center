@@ -30,6 +30,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # CUSTOMIZING:
     'app_interface',
+    'app_implementation',
+    'app_application',
+    'app_review',
     'app_user',
     'crispy_forms',
 
