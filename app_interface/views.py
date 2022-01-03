@@ -5,17 +5,31 @@ from app_interface.forms import InterfaceForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 def index(request):
     # ALL INTERFACES:
-    all_interfaces = Interface.objects.all()
+    query = request.GET.get('q')
+    if not query:
+        query = ''
+    if query == '':
+        all_interfaces = Interface.objects.all()
+    else:
+        all_interfaces = Interface.objects.filter(Q(name__icontains=query))
+
     # Pagination:
     paginator_all_interfaces = Paginator(all_interfaces, 10)
     page = request.GET.get('pg')
     all_interfaces = paginator_all_interfaces.get_page(page)
 
     return render(request, 'index.html', {'interfaces': all_interfaces})
+    
+
+def view_interface(request, interface_id):
+    interface_obj = Interface.objects.get(pk=interface_id)
+    return render(request, 'view.html', {'interface_obj': interface_obj})
+
 
 @login_required
 def my_interfaces(request):
@@ -31,7 +45,14 @@ def my_interfaces(request):
         return redirect('my_interfaces')
     else:
         # MY INTERFACES:
-        my_interfaces = Interface.objects.filter(owner=request.user)
+        query = request.GET.get('q')
+        if not query:
+            query = ''
+        if query == '':
+            my_interfaces = Interface.objects.filter(owner=request.user)
+        else:
+            my_interfaces = Interface.objects.filter(Q(name__icontains=query)).filter(owner=request.user)
+
         # Pagination:
         paginator_my_interfaces = Paginator(my_interfaces, 10)
         page = request.GET.get('pg')

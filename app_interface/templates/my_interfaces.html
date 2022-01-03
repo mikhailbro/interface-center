@@ -25,10 +25,9 @@
         {% endif %}
         
 
-        <form method="GET">
-            {% csrf_token %}
+        <form role="search" method="get" action=".">
             <div class="d-flex input-group">
-                <input type="search" class="form-control" name="search" id="search" placeholder="Suche Interfaces..." value="{{ search }}">
+                <input type="search" class="form-control" name="q" id="q" placeholder="Suche Interfaces..." value="{{request.GET.q}}">
                 <button type="submit" class="btn btn-primary btn-lg">Suche</button>
             </div>
         </form>
@@ -37,37 +36,35 @@
         {% if interfaces %}
             </br> </br>
             <p><b>Interfaces gefunden: {{ interfaces|length }}</b></p>
-            <table class="table table-bordered table-hover text-center">
+            <table class="table table-bordered table-hover text-center table-striped">
                 <thead class="table-dark">
                     <tr scope="row">
-                        <th scope="col-4">Name</th>
-                        <th scope="col-3">ACME Interface</th>
-                        <th scope="col-1">Edit</th>
-                        <th scope="col-1">Delete</th>
-                        <th scope="col-3">Owner</th>
+                        <th scope="col-1">ID</th>
+                        <th scope="col-3">Name</th>
+                        <th scope="col-1">Status</th>
+                        <th scope="col-3">Contract URL</th>
+                        <th scope="col-2">Owner App</th>
+                        <th scope="col-2">Owner</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for obj in interfaces %}
-                        {% if obj.isOwned %}    
-                            <tr scope="row" class="table-success">
-                                <td scope="col-4"><del>{{ obj.name }}</del></th>
-                                <td scope="col-3"><a href="{% url 'pending_interface' obj.id %}" class="btn btn-outline-success">&nbsp;&nbsp;Mark Interface pending&nbsp;&nbsp;</a></td>
-                                <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
-                                <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete Interface</a></td>
-                                <td scope="col-3">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
-                            </tr>
-                        {% else %}
-                            <tr scope="row">
-                                <td scope="col-4">{{ obj.name }}</th>
-                                <td scope="col-3"><a href="{% url 'complete_interface' obj.id %}" class="btn btn-outline-success">Mark Interface completed</a></td>
-                                <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
-                                <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete interface</a></td>
-                                <td scope="col-3">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
-                            </tr>
-                        {% endif %}
+                        <tr scope="row">
+                            <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="link-danger">{{ obj.interface_id }}</a></td>
+                            <td scope="col-3"><a href="{% url 'edit_interface' obj.id %}" class="link-danger">{{ obj.name }}</a></td>
+                            <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="link-danger">{{ obj.status }}</a></td>
+                            <td scope="col-3">
+                                {% if obj.contract_description %}
+                                    <a href="{{ obj.contract_description }}" class="link-success" target="_blank">{{ obj.contract_description }}</a>
+                                {% endif %}
+                            </td>
+                            <td scope="col-2">{{ obj.owner_application }}</td>
+                            <td scope="col-2">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
+
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                     {% if interfaces.has_previous %}
@@ -84,7 +81,7 @@
         {% else %}
             </br> </br>
             <div class="alert alert-primary" role="alert">
-                Keine eigenen Interfaces vorhanden
+                Keine eigenen Interfaces gefunden
             </div>
         {% endif %}   
 
