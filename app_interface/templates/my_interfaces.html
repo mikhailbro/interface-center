@@ -7,7 +7,7 @@
 {% block content %}
     <div class="container">
         </br>
-        <h2>Meine Interfaces</h2>
+        <h2>My Interfaces</h2>
         </br>
         
         {% if messages %}
@@ -27,15 +27,15 @@
 
         <form role="search" method="get" action=".">
             <div class="d-flex input-group">
-                <input type="search" class="form-control" name="q" id="q" placeholder="Suche Interfaces..." value="{{request.GET.q}}">
-                <button type="submit" class="btn btn-primary btn-lg">Suche</button>
+                <input type="search" class="form-control" name="q" id="q" placeholder="Search Interfaces..." value="{{request.GET.q}}">
+                <button type="submit" class="btn btn-primary btn-lg">Search</button>
             </div>
         </form>
 
 
         {% if interfaces %}
             </br> </br>
-            <p><b>Interfaces gefunden: {{ interfaces|length }}</b></p>
+            <p><b>Interfaces found: {{ interfaces|length }}</b></p>
             <table class="table table-bordered table-hover text-center table-striped">
                 <thead class="table-dark">
                     <tr scope="row">
@@ -81,7 +81,7 @@
         {% else %}
             </br> </br>
             <div class="alert alert-primary" role="alert">
-                Keine eigenen Interfaces gefunden
+                No own Interfaces found
             </div>
         {% endif %}   
 

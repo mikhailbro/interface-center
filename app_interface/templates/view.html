@@ -7,14 +7,34 @@
 {% block content %}
     <div class="container">
         </br>
-        <h1>View Interface</h1>
+        <h1>Interface Details</h1>
         </br>
     </div>
 
-    
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface ID: <b>{{ interface_obj.interface_id }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Name: <b>{{ interface_obj.name }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Status: <b>{{ interface_obj.status }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Creation Day: <b>{{ interface_obj.created_at }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Model Origin: <b>{{ interface_obj.model_origin }}</b></div>
+            </div>
+        </div>
+    </div>
+
+    </br> </br>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="{% url 'index' %}"><button type="submit" class="btn btn-primary me-md-5">Zurück</button></a>
+        <a href="{% url 'index' %}"><button type="submit" class="btn btn-primary me-md-5">Back to ACME Interfaces</button></a>
         
     </div>
 {% endblock content %}
