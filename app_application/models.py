@@ -10,4 +10,4 @@ class Application(models.Model):
 
 
     def __str__(self):
-        return self.name + "- " + str(self.status)
+        return self.app_id + "- " + self.short_name

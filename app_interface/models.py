@@ -1,10 +1,13 @@
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
+from app_application.models import Application
+
 
 # Create your models here.
 class Interface(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    owner_application = models.ForeignKey(Application, on_delete=models.DO_NOTHING, default=None)
     interface_id = models.CharField(max_length=10, default='', verbose_name='Interface ID')
     name = models.CharField(max_length=100)
     version = models.PositiveIntegerField(default=1)
@@ -100,4 +103,4 @@ class Interface(models.Model):
 
 
     def __str__(self):
-        return self.name + "- " + str(self.status)
+        return self.name + "- " + self.status

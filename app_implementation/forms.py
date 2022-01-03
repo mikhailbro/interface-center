@@ -7,4 +7,4 @@ from app_implementation.models import Implementation
 class ImplementationForm(forms.ModelForm):
     class Meta:
         model = Implementation
-        fields = ['interface', 'implementation_type', 'provider', 'provider_basepath', 'implementation_counter']
+        fields = ['interface', 'implementation_name', 'implementation_type', 'provider', 'provider_basepath', 'implementation_counter']
