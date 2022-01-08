@@ -30,4 +30,10 @@ def details(request, implementation_id):
         return redirect('implementations')
     else:
         implementation_obj = Implementation.objects.get(pk=implementation_id)
-        return render(request, 'details.html', {'implementation_obj': implementation_obj})
+        return render(request, 'implementation.html', {'implementation_obj': implementation_obj})
+
+
+@login_required
+def create_implementation(request):
+    
+    return render(request, 'create.html')

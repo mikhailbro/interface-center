@@ -30,4 +30,4 @@ def details(request, review_id):
         return redirect('reviews')
     else:
         review_obj = Review.objects.get(pk=review_id)
-        return render(request, 'details.html', {'review_obj': review_obj})
+        return render(request, 'review.html', {'review_obj': review_obj})

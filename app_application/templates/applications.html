@@ -1,1 +1,62 @@
-<h1>Applications</h1>
+{% extends 'app_base.html' %} 
+
+{% block title %}
+    <title>ACME IC - Applications</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        </br>
+        <h2>ACME Applications</h2>
+        </br>
+        
+        <form role="search" method="get" action=".">
+            <div class="d-flex input-group">
+                <input type="search" class="form-control" name="q" id="q" placeholder="Search Applications..." value="{{request.GET.q}}">
+                <button type="submit" class="btn btn-primary btn-lg">Search</button>
+            </div>
+        </form>
+
+
+        {% if applications %}
+            </br> </br>
+            <p><b>Applications found: {{ applications|length }}</b></p>
+            <table class="table table-bordered table-hover text-center table-striped">
+                <thead class="table-dark">
+                    <tr scope="row">
+                        <th scope="col-2">APP-ID</th>
+                        <th scope="col-5">Shortname</th>
+                        <th scope="col-5">Mailaddress</th>
+                </thead>
+                <tbody>
+                    {% for application_obj in applications %}
+                        <tr scope="row">
+                            <td scope="col-1"><a href="{% url 'application_details' application_obj.id %}" class="link-danger">{{ application_obj.app_id }}</a></td>
+                            <td scope="col-3">{{ application_obj.short_name }}</td>
+                            <td scope="col-1">{{ application_obj.mail_address }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    {% if applications.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?pg=1"><<</a></li>
+                        <li class="page-item"><a class="page-link" href="?pg={{ applications.previous_page_number }}">{{ applications.previous_page_number }}</a></li>
+                    {% endif %}
+                    <li class="page-item active"><a class="page-link" href="?pg={{ applications.number }}">{{ applications.number }}</a></li>
+                    {% if applications.has_next %}
+                        <li class="page-item"><a class="page-link" href="?pg={{ applications.next_page_number }}">{{ applications.next_page_number }}</a></li>
+                        <li class="page-item"><a class="page-link" href="?pg={{ applications.paginator.num_pages }}">>></a></li>
+                    {% endif %}
+                </ul>
+            </nav> 
+        {% else %}
+            </br> </br>
+            <div class="alert alert-primary" role="alert">
+                No applications found
+            </div>
+        {% endif %}   
+    </div>
+{% endblock content %}

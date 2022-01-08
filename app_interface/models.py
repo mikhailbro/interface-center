@@ -2,6 +2,26 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from app_application.models import Application
+from enum import Enum
+
+
+class InterfaceStatusEnum(Enum):
+        EINGANG = ('EINGANG', 'Eingang')
+        ENTWICKLUNG = ('ENTWICKLUNG', 'Entwicklung')
+        TEST = ('TEST', 'Test')
+        PRODUKTION = ('PRODUKTION', 'Produktion')
+        RUECKZUG = ('RUECKZUG', 'Rueckzug')
+        HISTORISCH = ('HISTORISCH', 'Historisch')
+        ABGELEHNT = ('ABGELEHNT', 'Abgelehnt')
+
+        @classmethod
+        def get_value(cls, member):
+           return cls[member].value[0]
+
+        @classmethod
+        def get_text(cls, member):
+           return cls[member].value[1]
+
 
 
 # Create your models here.
@@ -20,31 +40,18 @@ class Interface(models.Model):
     multi_provider = models.BooleanField(default=False)
     contract_description = models.URLField(max_length=200, verbose_name='Interface Contract URL', null=True, blank=True, default=None)
     
+
     restriction = models.BooleanField(default=False)
     restriction_text = models.TextField(max_length=300, null=True, blank=True, default=None)
-    class RestrictionCodeEnum(models.TextChoices):
-        NUTZUNG = 'NUTZUNG', ('Nutzung')
-        TEST = 'TEST', ('Test')
+    
+    restriction_code_choices = [('NUTZUNG', 'NUTZUNG'), ('TEST', 'TEST')]
+    restriction_code = models.CharField(max_length=20, choices=restriction_code_choices, blank=True, null=True, default=None)
 
-    restriction_code = models.CharField(
-        max_length=20,
-        choices=RestrictionCodeEnum.choices,
-        null=True, blank=True, default=None
-    )
-
-    class InterfaceStatusEnum(models.TextChoices):
-        EINGANG = 'EINGANG', ('Eingang')
-        ENTWICKLUNG = 'ENTWICKLUNG', ('Entwicklung')
-        TEST = 'TEST', ('Test')
-        PRODUKTION = 'PRODUKTION', ('Produktion')
-        RUECKZUG = 'RUECKZUG', ('Rueckzug')
-        HISTORISCH = 'HISTORISCH', ('Historisch')
-        ABGELEHNT = 'ABGELEHNT', ('Abgelehnt')
-
+    
     status = models.CharField(
-        max_length=16,
-        choices=InterfaceStatusEnum.choices,
-        default=InterfaceStatusEnum.EINGANG,
+        max_length=32,
+        choices=[x.value for x in InterfaceStatusEnum],
+        default=InterfaceStatusEnum.get_value('EINGANG'),
     )
 
     class ModelOriginEnum(models.TextChoices):
@@ -103,4 +110,4 @@ class Interface(models.Model):
 
 
     def __str__(self):
-        return self.name + "- " + self.status
+        return self.name + " (" + self.interface_id + ")"

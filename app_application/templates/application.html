@@ -1,0 +1,30 @@
+{% extends 'app_base.html' %} 
+
+{% block title %}
+    <title>ACME IC - View Application</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        </br>
+        <h1>Application Details</h1>
+        </br>
+    </div>
+
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-2">
+                <div class="p-3 border bg-light">APP-ID: <b>{{ application_obj.app_id }}</b></div>
+            </div>
+
+            <div class="col-5">
+                <div class="p-3 border bg-light">Application Shortname: <b>{{ application_obj.short_name }}</b></div>
+            </div>
+            
+            <div class="col-5">
+                <div class="p-3 border bg-light">Application Mail: <b>{{ application_obj.mail_address }}</b></div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

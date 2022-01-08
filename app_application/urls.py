@@ -6,6 +6,6 @@ from app_user import views as users_views
 
 urlpatterns = [
     path('', application_views.applications, name='applications'),
-    path('details/<application_id>', application_views.details, name='application_details'),
+    path('application/<application_id>', application_views.details, name='application_details'),
 
 ]

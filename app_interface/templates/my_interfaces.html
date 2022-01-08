@@ -58,7 +58,7 @@
                                     <a href="{{ obj.contract_description }}" class="link-success" target="_blank">{{ obj.contract_description }}</a>
                                 {% endif %}
                             </td>
-                            <td scope="col-2">{{ obj.owner_application }}</td>
+                            <td scope="col-2"><a href="{% url 'application_details' obj.owner_application.id %}" class="link-info">{{ obj.owner_application }}</a></td>
                             <td scope="col-2">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
                         </tr>
                     {% endfor %}
@@ -89,10 +89,8 @@
 
         <form method="POST">
             {% csrf_token %}
-            <div class="input-group">
-            <div class="input-group-text">Neues Interface</div>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Trage bitte einen Interface Namen ein">
-            <button type="submit" class="btn btn-primary">Neues Interface anlegen</button>
+            <div class="d-grid gap-2">
+                <a href="{% url 'create_interface' %}" class="btn btn-warning"><b>Create New Interface</b></a>
             </div>
         </form>
 

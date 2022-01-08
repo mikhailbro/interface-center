@@ -89,6 +89,12 @@ def edit_interface(request, interface_id):
 
 
 @login_required
+def create_interface(request):
+    
+    return render(request, 'create.html')
+
+
+@login_required
 def complete_interface(request, interface_id):
     interface = Interface.objects.get(pk=interface_id)
     if interface.owner == request.user:

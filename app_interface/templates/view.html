@@ -12,29 +12,95 @@
     </div>
 
     <div class="container">
-        <div class="row g-2">
+        <div class="row g-4">
             <div class="col-6">
-                <div class="p-3 border bg-light">Interface ID: <b>{{ interface_obj.interface_id }}</b></div>
+                <div class="p-3 border bg-info">Interface ID: <b>{{ interface_obj.interface_id }}</b></div>
             </div>
             <div class="col-6">
-                <div class="p-3 border bg-light">Interface Name: <b>{{ interface_obj.name }}</b></div>
+                <div class="p-3 border bg-info">Interface Name: <b>{{ interface_obj.name }}</b></div>
             </div>
+
+            <div class="col-6">
+                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Application Owner: <b>{{ interface_obj.owner_application }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Owner: <b>{{ interface_obj.owner.first_name }} {{ interface_obj.owner.last_name }}</b></div>
+            </div>
+
             <div class="col-6">
                 <div class="p-3 border bg-light">Interface Status: <b>{{ interface_obj.status }}</b></div>
             </div>
             <div class="col-6">
-                <div class="p-3 border bg-light">Interface Creation Day: <b>{{ interface_obj.created_at }}</b></div>
-            </div>
-            <div class="col-6">
                 <div class="p-3 border bg-light">Interface Model Origin: <b>{{ interface_obj.model_origin }}</b></div>
             </div>
+
+            <div class="col-6">
+                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Version: <b>{{ interface_obj.version }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Info Classification: <b>{{ interface_obj.info_classification }}</b></div>
+            </div>
+
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Contract URL: 
+                    {% if interface_obj.contract_description %}
+                        <a href="{{ interface_obj.contract_description }}" target="_blank"><b>{{ interface_obj.contract_description }}</b></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Description: <b>{{ interface_obj.description }}</b></div>
+            </div>
+            
+            <div class="col-6">
+                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Creation Day: <b>{{ interface_obj.created_at }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Production Start: <b>{{ interface_obj.production_start_at }}</b></div>
+            </div>
+
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Communication Pattern: <b>{{ interface_obj.communication_pattern }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Accessibility: <b>{{ interface_obj.accessibility }}</b></div>
+            </div>
+
+            <div class="col-6">
+                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Infoflow Direction: <b>{{ interface_obj.infoflow_direction }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Multi Provider: <b>{{ interface_obj.multi_provider }}</b></div>
+            </div>
+
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Restriction: <b>{{ interface_obj.restriction }}</b></div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">Owned Interface: <b>{{ interface_obj.owned_interface }}</b></div>
+            </div>
+
+            {% if interface_obj.restriction %}
+                <div class="col-6">
+                    <div class="p-3 border" style="background-color: #e3f2fd;">Interface Restriction Code: <b>{{ interface_obj.restriction_code }}</b></div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 border" style="background-color: #e3f2fd;">Interface Restriction Text: <b>{{ interface_obj.restriction_text }}</b></div>
+                </div>
+            {% endif %}
+
+            {% if interface_obj.decommissioning_at %}
+                <div class="col-6">
+                    <div class="p-3 border bg-light">Interface Decommissionning At: <b>{{ interface_obj.decommissioning_at }}</b></div>
+                 </div>
+            {% endif %}
+            
         </div>
     </div>
 
     </br> </br>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="{% url 'index' %}"><button type="submit" class="btn btn-primary me-md-5">Back to ACME Interfaces</button></a>
-        
+        <a href="{% url 'index' %}"><button type="submit" class="btn btn-primary me-md-5">Back to ACME Interfaces</button></a>  
     </div>
 {% endblock content %}
