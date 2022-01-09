@@ -40,7 +40,7 @@ def create_review(request):
 
 
 @login_required
-def update_review(request):
+def update_review(request, review_id):
     if request.method == "POST":
         review = Review.objects.get(pk=review_id)
         review_form = ReviewForm(request.POST or None, instance = review)
@@ -52,5 +52,6 @@ def update_review(request):
             messages.success(request, (f"Review is successfully updated"))
             return redirect('update_interface', interface)
     else:
-        review_obj = Review.objects.get(pk=review_id)
-        return render(request, 'update_review.html', {'review_obj': review_obj})
+        review = Review.objects.get(pk=review_id)
+        review_form = ReviewForm(request.POST or None, instance = review)
+        return render(request, 'update_review.html', {'review_obj': review_form, 'interface': review.interface})

@@ -40,7 +40,7 @@ def create_implementation(request):
 
 
 @login_required
-def update_implementation(request):
+def update_implementation(request, implementation_id):
     if request.method == "POST":
         implementation = Implementation.objects.get(pk=implementation_id)
         implementation_form = ImplementationForm(request.POST or None, instance = implementation)
@@ -52,6 +52,7 @@ def update_implementation(request):
             messages.success(request, (f"Implementation is successfully updated"))
             return redirect('update_interface', interface)
     else:
-        implementation_obj = Implementation.objects.get(pk=implementation_id)
-        return render(request, 'update_implementation.html', {'implementation_obj': implementation_obj})
+        implementation = Implementation.objects.get(pk=implementation_id)
+        implementation_form = ImplementationForm(request.POST or None, instance = implementation)
+        return render(request, 'update_implementation.html', {'implementation_obj': implementation_form, 'interface': implementation.interface})
 

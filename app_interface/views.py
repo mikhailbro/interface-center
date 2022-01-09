@@ -23,13 +23,15 @@ def index(request):
         all_interfaces = Interface.objects.all()
     else:
         all_interfaces = Interface.objects.filter(Q(interface_id__icontains=query) | Q(name__icontains=query) | Q(status__icontains=query) | Q(contract_description__icontains=query))
+    
+    counter = all_interfaces.__len__
 
     # Pagination:
     paginator_all_interfaces = Paginator(all_interfaces, 10)
     page = request.GET.get('pg')
     all_interfaces = paginator_all_interfaces.get_page(page)
 
-    return render(request, 'index.html', {'interfaces': all_interfaces})
+    return render(request, 'index.html', {'interfaces': all_interfaces, 'counter': counter})
     
 
 def interface_details(request, interface_id):
@@ -65,29 +67,14 @@ def my_interfaces(request):
         else:
             my_interfaces = Interface.objects.filter(Q(interface_id__icontains=query) | Q(name__icontains=query) | Q(status__icontains=query) | Q(contract_description__icontains=query)).filter(owner=request.user)
 
+        counter = my_interfaces.__len__
+
         # Pagination:
         paginator_my_interfaces = Paginator(my_interfaces, 10)
         page = request.GET.get('pg')
         my_interfaces = paginator_my_interfaces.get_page(page)
 
-        return render(request, 'my_interfaces.html', {'interfaces': my_interfaces})
-
-
-
-@login_required
-def update_interface(request, interface_id):
-    if request.method == "POST":
-        interface = Interface.objects.get(pk=interface_id)
-        form = InterfaceForm(request.POST or None, instance = interface)
-        if form.is_valid():
-            form.save()
-
-        messages.success(request, (f"Interface '{interface.name}' is successfully updated!"))
-        return redirect('my_interfaces')
-    else:
-        interface_obj = Interface.objects.get(pk=interface_id)
-        return render(request, 'update_interface.html', {'interface_obj': interface_obj})
-
+        return render(request, 'my_interfaces.html', {'interfaces': my_interfaces, 'counter': counter})
 
 
 @login_required
@@ -103,6 +90,19 @@ def create_interface(request):
         return render(request, 'create_interface.html', {'interface_obj': interface_obj})
 
 
+@login_required
+def update_interface(request, interface_id):
+    if request.method == "POST":
+        interface = Interface.objects.get(pk=interface_id)
+        interface_form = InterfaceForm(request.POST or None, instance = interface)
+        if interface_form.is_valid():
+            interface_form.save()
+            messages.success(request, (f"Interface is successfully updated"))
+            return redirect('my_interfaces')
+    else:
+        interface = Interface.objects.get(pk=interface_id)
+        interface_form = InterfaceForm(request.POST or None, instance = interface)
+        return render(request, 'update_interface.html', {'interface_obj': interface_form})
 
 
 

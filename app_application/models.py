@@ -10,4 +10,4 @@ class Application(models.Model):
 
 
     def __str__(self):
-        return self.app_id + " (" + self.short_name + ")"
+        return f"{self.app_id} ({self.short_name})"

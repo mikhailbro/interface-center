@@ -14,13 +14,15 @@ def applications(request):
         all_applications = Application.objects.all()
     else:
         all_applications = Application.objects.filter(Q(short_name__icontains=query) | Q(app_id__icontains=query) | Q(mail_address__icontains=query))
+    
+    counter = all_applications.__len__
 
     # Pagination:
     paginator_all_applications = Paginator(all_applications, 10)
     page = request.GET.get('pg')
     all_applications = paginator_all_applications.get_page(page)
 
-    return render(request, 'applications.html', {'applications': all_applications})
+    return render(request, 'applications.html', {'applications': all_applications, 'counter': counter})
 
 
 def details(request, application_id):

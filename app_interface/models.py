@@ -110,4 +110,4 @@ class Interface(models.Model):
 
 
     def __str__(self):
-        return self.name + " (" + self.interface_id + ")"
+        return f"{self.name} ({self.interface_id})"

@@ -13,15 +13,15 @@
         <form role="search" method="get" action=".">
             <div class="d-flex input-group">
                 <input type="search" class="form-control" name="q" id="q" placeholder="Search Applications..." value="{{request.GET.q}}">
-                <button type="submit" class="btn btn-primary btn-lg">Search</button>
+                <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
 
 
         {% if applications %}
             </br> </br>
-            <p><b>Applications found: {{ applications|length }}</b></p>
-            <table class="table table-bordered table-hover text-center table-striped">
+            <p><b>Applications found: {{ counter }}</b></p>
+            <table class="table table-bordered table-hover text-center table-striped" id="applications">
                 <thead class="table-dark">
                     <tr scope="row">
                         <th scope="col-2">APP-ID</th>
@@ -39,6 +39,14 @@
                 </tbody>
             </table>
 
+            <script>
+                $('#applications').DataTable( {
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "bInfo": false
+                    });
+            </script>
+            
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                     {% if applications.has_previous %}

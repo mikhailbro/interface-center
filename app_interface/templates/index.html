@@ -13,62 +13,70 @@
         <form role="search" method="get" action=".">
             <div class="d-flex input-group">
                 <input type="search" class="form-control" name="q" id="q" placeholder="Search Interfaces..." value="{{request.GET.q}}">
-                <button type="submit" class="btn btn-primary btn-lg">Search</button>
+                <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
 
         {% if interfaces %}
             </br> </br>
-            <p><b>Interfaces found: {{ interfaces|length }}</b></p>
-
-        <table class="table table-bordered table-hover text-center table-striped" >
-            <thead class="table-dark" >
-                <tr scope="row">
-                    <th scope="col-1">ID</th>
-                    <th scope="col-3">Name</th>
-                    <th scope="col-1">Status</th>
-                    <th scope="col-3">Contract URL</th>
-                    <th scope="col-2">Owner App</th>
-                    <th scope="col-2">Owner</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for obj in interfaces %}
+            <p><b>Interfaces found: {{ counter }}</b></p>
+            
+            <table class="table table-bordered table-hover text-center table-striped" id="all_interfaces">
+                <thead class="table-dark" >
                     <tr scope="row">
-                        <td scope="col-1"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.interface_id }}</a></td>
-                        <td scope="col-3"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.name }}</a></td>
-                        <td scope="col-1"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.status }}</a></td>
-                        <td scope="col-3">
-                            {% if obj.contract_description %}
-                                <a href="{{ obj.contract_description }}" class="link-success" target="_blank">{{ obj.contract_description }}</a>
-                            {% endif %}
-                        </td>
-                        <td scope="col-2"><a href="{% url 'application_details' obj.owner_application.id %}" class="link-info">{{ obj.owner_application }}</a></td>
-                        <td scope="col-2">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
-
-                        <!-- 
-                        <td scope="col-3"><a href="{% url 'pending_interface' obj.id %}" class="btn btn-outline-success">&nbsp;&nbsp;Mark Interface pending&nbsp;&nbsp;</a></td>
-                        <td scope="col-1"><a href="{% url 'update_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
-                        <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete Interface</a></td>
-                        -->
+                        <th scope="col-1">ID</th>
+                        <th scope="col-3">Name</th>
+                        <th scope="col-1">Status</th>
+                        <th scope="col-3">Contract URL</th>
+                        <th scope="col-2">Owner App</th>
+                        <th scope="col-2">Owner</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for obj in interfaces %}
+                        <tr scope="row">
+                            <td scope="col-1"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.interface_id }}</a></td>
+                            <td scope="col-3"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.name }}</a></td>
+                            <td scope="col-1"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.status }}</a></td>
+                            <td scope="col-3">
+                                {% if obj.contract_description %}
+                                    <a href="{{ obj.contract_description }}" class="link-success" target="_blank">{{ obj.contract_description }}</a>
+                                {% endif %}
+                            </td>
+                            <td scope="col-2"><a href="{% url 'application_details' obj.owner_application.id %}" class="link-info">{{ obj.owner_application }}</a></td>
+                            <td scope="col-2">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
 
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-                {% if interfaces.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?pg=1"><<</a></li>
-                    <li class="page-item"><a class="page-link" href="?pg={{ interfaces.previous_page_number }}">{{ interfaces.previous_page_number }}</a></li>
-                {% endif %}
-                <li class="page-item active"><a class="page-link" href="?pg={{ interfaces.number }}">{{ interfaces.number }}</a></li>
-                {% if interfaces.has_next %}
-                    <li class="page-item"><a class="page-link" href="?pg={{ interfaces.next_page_number }}">{{ interfaces.next_page_number }}</a></li>
-                    <li class="page-item"><a class="page-link" href="?pg={{ interfaces.paginator.num_pages }}">>></a></li>
-                {% endif %}
-            </ul>
-        </nav>
+                            <!-- 
+                            <td scope="col-3"><a href="{% url 'pending_interface' obj.id %}" class="btn btn-outline-success">&nbsp;&nbsp;Mark Interface pending&nbsp;&nbsp;</a></td>
+                            <td scope="col-1"><a href="{% url 'update_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
+                            <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete Interface</a></td>
+                            -->
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <script>
+                $('#all_interfaces').DataTable( {
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "bInfo": false
+                    });
+            </script>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    {% if interfaces.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?pg=1"><<</a></li>
+                        <li class="page-item"><a class="page-link" href="?pg={{ interfaces.previous_page_number }}">{{ interfaces.previous_page_number }}</a></li>
+                    {% endif %}
+                    <li class="page-item active"><a class="page-link" href="?pg={{ interfaces.number }}">{{ interfaces.number }}</a></li>
+                    {% if interfaces.has_next %}
+                        <li class="page-item"><a class="page-link" href="?pg={{ interfaces.next_page_number }}">{{ interfaces.next_page_number }}</a></li>
+                        <li class="page-item"><a class="page-link" href="?pg={{ interfaces.paginator.num_pages }}">>></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
 
         {% else %}
             </br> </br>
