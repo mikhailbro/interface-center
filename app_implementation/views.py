@@ -19,21 +19,27 @@ def implementations(request):
 
 
 @login_required
-def details(request, implementation_id):
-    if request.method == "POST":
-        implementation = Implementation.objects.get(pk=implementation_id)
-        form = ImplementationForm(request.POST or None, instance = implementation)
-        if form.is_valid():
-            form.save()
-
-        messages.success(request, (f"Implementation '{implementation.shortname}' is successfully updated!"))
-        return redirect('implementations')
-    else:
-        implementation_obj = Implementation.objects.get(pk=implementation_id)
-        return render(request, 'implementation.html', {'implementation_obj': implementation_obj})
+def implementation_details(request, implementation_id):
+    implementation_obj = Implementation.objects.get(pk=implementation_id)
+    return render(request, 'implementation.html', {'implementation_obj': implementation_obj})
 
 
 @login_required
 def create_implementation(request):
-    
-    return render(request, 'create.html')
+    if request.method == "POST":
+        implementation_form = ImplementationForm(request.POST or None)
+        if implementation_form.is_valid():
+            instance = implementation_form.save(commit=False)
+            interface = request.POST.get('interface')
+            instance.save()
+
+            messages.success(request, (f"Implementation is successfully created"))
+            return redirect('update_interface', interface)
+    else:
+        form = ImplementationForm(request.POST or None)
+        return render(request, 'create_implementation.html', {'implementation_obj': form})
+
+
+@login_required
+def update_implementation(request):
+    return render(request, 'update_implementation.html')

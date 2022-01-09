@@ -7,17 +7,17 @@
 {% block content %}
     <div class="container">
         </br>
-        <h1>Implementation Details</h1>
+        <h2>Implementation Details</h2>
         </br>
     </div>
 
     <div class="container">
         <div class="row g-4">
             <div class="col-6">
-                <div class="p-3 border bg-info">Interface: <a href="{% url 'view_interface' implementation_obj.interface.id %}" class="link-primary"><b>{{ implementation_obj.interface }}</b></a></div>
+                <div class="p-3 border bg-info">Interface: <a href="{% url 'interface_details' implementation_obj.interface.id %}" class="link-primary"><b>{{ implementation_obj.interface }}</b></a></div>
             </div>
             <div class="col-6">
-                <div class="p-3 border bg-info">Implementation Name: <b>{{ implementation_obj.implementation_name }}</b></div>
+                <div class="p-3 border bg-info">Implementation Name: <b>bla</b></div>
             </div>
             
             <div class="col-6">
@@ -39,6 +39,6 @@
     </br> </br>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="{% url 'view_interface' implementation_obj.interface.id %}"><button type="submit" class="btn btn-primary me-md-5">Back to <b>{{ implementation_obj.interface }}</b></button></a>  
+        <a href="{% url 'interface_details' implementation_obj.interface.id %}"><button type="submit" class="btn btn-primary me-md-5">Back to <b>{{ implementation_obj.interface }}</b></button></a>  
     </div>
 {% endblock content %}

@@ -1,4 +1,5 @@
 {% extends 'app_base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     <title>ACME IC - Create Interface Implementation</title>
@@ -12,84 +13,16 @@
 
         <form method="POST">
             {% csrf_token %}
-
-            <div class="col-sm-6">
-                {% with var='restriction_code' help='' %}
-                <label for="{{var}}">Restriction Code:</label>
-                <select class="form-control" id="{{var}}" name="{{var}}">
-                    {% for value, text in interface_obj.restriction_code.choices %}
-                        <option value="{{ value }}" {% if interface_obj.restriction_code.value == value %} selected {% endif %}>{{ text }}asasd</option>
-                    {% endfor %}
-                </select>
-                <small id="{{var}}" class="form-text text-muted">{{help}}</small>
-                {% endwith %}
-            </div>
-
-            {% for value, text in interface_obj.fields.status.choices %}
-                <option value="{{ value }}">{{ text }}</option>
-            {% endfor %}
-
-            {% for choice in interface_obj.status.choices %}
-                bla
-            {% endfor %}
-
-
-
-
-            <div class="input-group col-6 p-2">
-                <div class="input-group-text col-3">Interface ID*</div>
-                <input type="text" class="form-control input-group-append" name="interface_id" id="interface_id" placeholder="{{ interface_obj.interface_id }}" value="{{ interface_obj.interface_id }}">
-            </div>
-
-            <div class="input-group col-6 p-2">
-                <div class="input-group-text col-3">Interface Name*</div>
-                <input type="text" class="form-control" name="name" id="name" placeholder="{{ interface_obj.name }}" value="{{ interface_obj.name }}">
-            </div>
-
-            <div class="input-group col-6 p-2">
-                <div class="input-group-text col-3">Interface Application Owner*</div>
-                <input type="text" class="form-control" name="owner_application" id="owner_application" placeholder="{{ interface_obj.owner_application }}" value="{{ interface_obj.owner_application }}">
-            </div>
-            
-            <div class="input-group col-6 p-2">
-                <div class="input-group-text col-3">Interface Owner*</div>
-                <input type="text" class="form-control" value="{{ interface_obj.owner.first_name }} {{ interface_obj.owner.last_name }}" disabled>
-            </div>
-
-            <div class="input-group form-check p-2">
-                <label class="form-check-label input-group-text col-3">Owned Interface</label>
-                <input type="checkbox" class="form-check-input mx-3 my-2" id="owned_interface" name="owned_interface" {% if interface_obj.owned_interface %}checked="checked"{% endif %}>
-            </div>
-
-            <div class="input-group form-check p-2">
-                <label class="form-check-label input-group-text col-3">Multi Provider</label>
-                <input type="checkbox" class="form-check-input mx-3 my-2" id="multi_provider" name="multi_provider" {% if interface_obj.multi_provider %}checked="checked"{% endif %}>
-            </div>
-        
-
-
-
-            <div class="input-group col-6 p-2">
-                <div class="input-group-text col-3">Interface Status*</div>
-                <select name="status" id="status">
-                    {% for key, value in interface_obj.status.choices %}
-                        <option value="{{ key }}" {% if interface_obj.status == key %} selected {% endif %}>{{ value }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-
-
-
-            <div class="input-group p-2">
-                <button type="submit" class="btn btn-danger">Save Interface</button>
+            {{ implementation_obj|crispy }}
+            <div class="input-group p-4">
+                <button type="submit" class="btn btn-danger">Save Implementation</button>
             </div>
         </form>
     </div>
 
-    </br> </br>
+    </br>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Back to My Interfaces</button></a>  
+        <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
     </div>
 {% endblock content %}

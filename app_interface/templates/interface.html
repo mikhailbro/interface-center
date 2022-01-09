@@ -7,7 +7,7 @@
 {% block content %}
     <div class="container">
         </br>
-        <h1>Interface Details</h1>
+        <h2>Interface Details</h2>
         </br>
     </div>
 
@@ -21,7 +21,9 @@
             </div>
 
             <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Application Owner: <b>{{ interface_obj.owner_application }}</b></div>
+                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Application Owner: <a href="{% url 'application_details' interface_obj.owner.id %}" class="link-primary">
+                    <b>{{ interface_obj.owner_application }}</b></a>
+                </div>
             </div>
             <div class="col-6">
                 <div class="p-3 border" style="background-color: #e3f2fd;">Interface Owner: <b>{{ interface_obj.owner.first_name }} {{ interface_obj.owner.last_name }}</b></div>
@@ -94,6 +96,21 @@
                     <div class="p-3 border bg-light">Interface Decommissionning At: <b>{{ interface_obj.decommissioning_at }}</b></div>
                  </div>
             {% endif %}
+
+            <div class="col-6">
+                <div class="p-3 border bg-info">Interface Implementations: 
+                    {% if implementation_objs %}
+                        <ul>
+                            {% for implementation in implementation_objs %}
+                                <li><a href="{% url 'implementation_details' implementation.id %}" class="link-primary"><b>{{implementation}}</b></a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+            </div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-info">Interface Reviews: <b>TODO</b></div>
+            </div>
             
         </div>
     </div>

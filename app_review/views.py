@@ -19,7 +19,7 @@ def reviews(request):
 
 
 @login_required
-def details(request, review_id):
+def review_details(request, review_id):
     if request.method == "POST":
         review = Review.objects.get(pk=review_id)
         form = ReviewForm(request.POST or None, instance = review)
@@ -31,3 +31,13 @@ def details(request, review_id):
     else:
         review_obj = Review.objects.get(pk=review_id)
         return render(request, 'review.html', {'review_obj': review_obj})
+
+
+@login_required
+def create_review(request):
+    return render(request, 'create_review.html')
+
+
+@login_required
+def update_review(request):
+    return render(request, 'update_review.html')

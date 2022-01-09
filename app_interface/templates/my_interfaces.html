@@ -50,9 +50,9 @@
                 <tbody>
                     {% for obj in interfaces %}
                         <tr scope="row">
-                            <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="link-danger">{{ obj.interface_id }}</a></td>
-                            <td scope="col-3"><a href="{% url 'edit_interface' obj.id %}" class="link-danger">{{ obj.name }}</a></td>
-                            <td scope="col-1"><a href="{% url 'edit_interface' obj.id %}" class="link-danger">{{ obj.status }}</a></td>
+                            <td scope="col-1"><a href="{% url 'update_interface' obj.id %}" class="link-danger">{{ obj.interface_id }}</a></td>
+                            <td scope="col-3"><a href="{% url 'update_interface' obj.id %}" class="link-danger">{{ obj.name }}</a></td>
+                            <td scope="col-1"><a href="{% url 'update_interface' obj.id %}" class="link-danger">{{ obj.status }}</a></td>
                             <td scope="col-3">
                                 {% if obj.contract_description %}
                                     <a href="{{ obj.contract_description }}" class="link-success" target="_blank">{{ obj.contract_description }}</a>

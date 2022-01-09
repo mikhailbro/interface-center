@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from app_interface.models import Interface
 from app_interface.forms import InterfaceForm
+from app_implementation.models import Implementation
+from app_implementation.forms import ImplementationForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -16,7 +18,7 @@ def index(request):
     if query == '':
         all_interfaces = Interface.objects.all()
     else:
-        all_interfaces = Interface.objects.filter(Q(name__icontains=query))
+        all_interfaces = Interface.objects.filter(Q(interface_id__icontains=query) | Q(name__icontains=query) | Q(status__icontains=query) | Q(contract_description__icontains=query))
 
     # Pagination:
     paginator_all_interfaces = Paginator(all_interfaces, 10)
@@ -26,9 +28,14 @@ def index(request):
     return render(request, 'index.html', {'interfaces': all_interfaces})
     
 
-def view_interface(request, interface_id):
+def interface_details(request, interface_id):
     interface_obj = Interface.objects.get(pk=interface_id)
-    return render(request, 'view.html', {'interface_obj': interface_obj})
+
+    implementation_objs = Implementation.objects.all().filter(interface=interface_obj)
+    for idx in range(len(implementation_objs)):
+        print("implementation: ", idx, ": ", implementation_objs[idx])
+    
+    return render(request, 'interface.html', {'interface_obj': interface_obj, 'implementation_objs': implementation_objs})
 
 
 @login_required
@@ -51,7 +58,7 @@ def my_interfaces(request):
         if query == '':
             my_interfaces = Interface.objects.filter(owner=request.user)
         else:
-            my_interfaces = Interface.objects.filter(Q(name__icontains=query)).filter(owner=request.user)
+            my_interfaces = Interface.objects.filter(Q(interface_id__icontains=query) | Q(name__icontains=query) | Q(status__icontains=query) | Q(contract_description__icontains=query)).filter(owner=request.user)
 
         # Pagination:
         paginator_my_interfaces = Paginator(my_interfaces, 10)
@@ -59,8 +66,32 @@ def my_interfaces(request):
         my_interfaces = paginator_my_interfaces.get_page(page)
 
         return render(request, 'my_interfaces.html', {'interfaces': my_interfaces})
-    
-      
+
+
+
+@login_required
+def update_interface(request, interface_id):
+    if request.method == "POST":
+        interface = Interface.objects.get(pk=interface_id)
+        form = InterfaceForm(request.POST or None, instance = interface)
+        if form.is_valid():
+            form.save()
+
+        messages.success(request, (f"Interface '{interface.name}' is successfully updated!"))
+        return redirect('my_interfaces')
+    else:
+        interface_obj = Interface.objects.get(pk=interface_id)
+        return render(request, 'update_interface.html', {'interface_obj': interface_obj})
+
+
+
+@login_required
+def create_interface(request):
+    return render(request, 'create_interface.html')
+
+
+
+
 @login_required
 def delete_interface(request, interface_id):
     interface = Interface.objects.get(pk=interface_id)
@@ -72,26 +103,6 @@ def delete_interface(request, interface_id):
 
     return redirect('my_interfaces')
 
-
-@login_required
-def edit_interface(request, interface_id):
-    if request.method == "POST":
-        interface = Interface.objects.get(pk=interface_id)
-        form = InterfaceForm(request.POST or None, instance = interface)
-        if form.is_valid():
-            form.save()
-
-        messages.success(request, (f"Interface '{interface.name}' is successfully updated!"))
-        return redirect('my_interfaces')
-    else:
-        interface_obj = Interface.objects.get(pk=interface_id)
-        return render(request, 'edit.html', {'interface_obj': interface_obj})
-
-
-@login_required
-def create_interface(request):
-    
-    return render(request, 'create.html')
 
 
 @login_required
