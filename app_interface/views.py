@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+
 from app_interface.models import Interface
 from app_interface.forms import InterfaceForm
 from app_implementation.models import Implementation
 from app_implementation.forms import ImplementationForm
+from app_review.models import Review
+from app_review.forms import ReviewForm
+
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -31,11 +35,12 @@ def index(request):
 def interface_details(request, interface_id):
     interface_obj = Interface.objects.get(pk=interface_id)
 
+    review_objs = Review.objects.all().filter(interface=interface_obj)
     implementation_objs = Implementation.objects.all().filter(interface=interface_obj)
-    for idx in range(len(implementation_objs)):
-        print("implementation: ", idx, ": ", implementation_objs[idx])
-    
-    return render(request, 'interface.html', {'interface_obj': interface_obj, 'implementation_objs': implementation_objs})
+    #for idx in range(len(implementation_objs)):
+    #    print("implementation: ", idx, ": ", implementation_objs[idx])
+
+    return render(request, 'interface.html', {'interface_obj': interface_obj, 'implementation_objs': implementation_objs, 'review_objs': review_objs})
 
 
 @login_required
@@ -87,7 +92,18 @@ def update_interface(request, interface_id):
 
 @login_required
 def create_interface(request):
-    return render(request, 'create_interface.html')
+    if request.method == "POST":
+        interface_form = InterfaceForm(request.POST or None)
+        if interface_form.is_valid():
+            interface_form.save()
+            messages.success(request, (f"Interface is successfully created"))
+            return redirect('my_interfaces')
+    else:
+        interface_obj = InterfaceForm(request.POST or None)
+        return render(request, 'create_interface.html', {'interface_obj': interface_obj})
+
+
+
 
 
 

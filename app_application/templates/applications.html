@@ -25,13 +25,13 @@
                 <thead class="table-dark">
                     <tr scope="row">
                         <th scope="col-2">APP-ID</th>
-                        <th scope="col-5">Shortname</th>
-                        <th scope="col-5">Mailaddress</th>
+                        <th scope="col-5">Short Name</th>
+                        <th scope="col-5">Mail Address</th>
                 </thead>
                 <tbody>
                     {% for application_obj in applications %}
                         <tr scope="row">
-                            <td scope="col-1"><a href="{% url 'application_details' application_obj.id %}" class="link-danger">{{ application_obj.app_id }}</a></td>
+                            <td scope="col-1"><a href="{% url 'application_details' application_obj.id %}" class="link-info">{{ application_obj.app_id }}</a></td>
                             <td scope="col-3">{{ application_obj.short_name }}</td>
                             <td scope="col-1">{{ application_obj.mail_address }}</td>
                         </tr>

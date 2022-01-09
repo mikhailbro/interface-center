@@ -1,0 +1,29 @@
+{% extends 'app_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>ACME IC - Update Interface Review</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        </br>
+        <h1>Update Interface Review</h1>
+        </br>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ review_obj|crispy }}
+            
+            <div class="input-group p-4">
+                <button type="submit" class="btn btn-danger">Save Review</button>
+            </div>
+        </form>
+    </div>
+
+    </br>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+    </div>
+{% endblock content %}

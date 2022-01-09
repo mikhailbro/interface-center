@@ -18,26 +18,39 @@ def reviews(request):
     return render(request, 'reviews.html', {'reviews': all_reviews})
 
 
-@login_required
 def review_details(request, review_id):
-    if request.method == "POST":
-        review = Review.objects.get(pk=review_id)
-        form = ReviewForm(request.POST or None, instance = review)
-        if form.is_valid():
-            form.save()
-
-        messages.success(request, (f"Review '{review.shortname}' is successfully updated!"))
-        return redirect('reviews')
-    else:
-        review_obj = Review.objects.get(pk=review_id)
-        return render(request, 'review.html', {'review_obj': review_obj})
+    review_obj = Review.objects.get(pk=review_id)
+    return render(request, 'review.html', {'review_obj': review_obj})
 
 
 @login_required
 def create_review(request):
-    return render(request, 'create_review.html')
+    if request.method == "POST":
+        review_form = ReviewForm(request.POST or None)
+        if review_form.is_valid():
+            instance = review_form.save(commit=False)
+            interface = request.POST.get('interface')
+            instance.save()
+
+            messages.success(request, (f"Review is successfully created"))
+            return redirect('update_interface', interface)
+    else:
+        review_form = ReviewForm(request.POST or None)
+        return render(request, 'create_review.html', {'review_obj': review_form})
 
 
 @login_required
 def update_review(request):
-    return render(request, 'update_review.html')
+    if request.method == "POST":
+        review = Review.objects.get(pk=review_id)
+        review_form = ReviewForm(request.POST or None, instance = review)
+        if review_form.is_valid():
+            instance = review_form.save(commit=False)
+            interface = request.POST.get('interface')
+            instance.save()
+
+            messages.success(request, (f"Review is successfully updated"))
+            return redirect('update_interface', interface)
+    else:
+        review_obj = Review.objects.get(pk=review_id)
+        return render(request, 'update_review.html', {'review_obj': review_obj})

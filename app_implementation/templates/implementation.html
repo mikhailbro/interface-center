@@ -17,28 +17,29 @@
                 <div class="p-3 border bg-info">Interface: <a href="{% url 'interface_details' implementation_obj.interface.id %}" class="link-primary"><b>{{ implementation_obj.interface }}</b></a></div>
             </div>
             <div class="col-6">
-                <div class="p-3 border bg-info">Implementation Name: <b>bla</b></div>
+                <div class="p-3 border bg-info">Implementation Basepath: <b>{{ implementation_obj.provider_basepath }}</b></div>
             </div>
             
             <div class="col-6">
                 <div class="p-3 border" style="background-color: #e3f2fd;">Implementation Provider: <a href="{% url 'application_details' implementation_obj.provider.id %}" class="link-primary"><b>{{ implementation_obj.provider }}</b></a></div>
             </div>
             <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Implementation Basepath: <b>{{ implementation_obj.provider_basepath }}</b></div>
+                <div class="p-3 border" style="background-color: #e3f2fd;">Implementation Type: <b>{{ implementation_obj.implementation_type }}</b></div>
             </div>
             
             <div class="col-6">
-                <div class="p-3 border bg-light">Implementation Type: <b>{{ implementation_obj.implementation_type }}</b></div>
+                <div class="p-3 border bg-light">Implementation Counter: <b>{{ implementation_obj.implementation_counter }}</b></div>
             </div>
             <div class="col-6">
-                <div class="p-3 border bg-light">Implementation Counter: <b>{{ implementation_obj.implementation_counter }}</b></div>
+                <div class="p-3">&nbsp;</div>
+            </div>
+
+            <div class="d-flex p-4">
+                <p class="float-right">
+                    <a href="{% url 'interface_details' implementation_obj.interface.id %}"><button type="submit" class="btn btn-primary">Back to <b>{{ implementation_obj.interface }}</b></button></a>
+                </p>
             </div>
         </div>
     </div>
 
-    </br> </br>
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="{% url 'interface_details' implementation_obj.interface.id %}"><button type="submit" class="btn btn-primary me-md-5">Back to <b>{{ implementation_obj.interface }}</b></button></a>  
-    </div>
 {% endblock content %}

@@ -18,7 +18,6 @@ def implementations(request):
     return render(request, 'implementations.html', {'implementations': all_implementations})
 
 
-@login_required
 def implementation_details(request, implementation_id):
     implementation_obj = Implementation.objects.get(pk=implementation_id)
     return render(request, 'implementation.html', {'implementation_obj': implementation_obj})
@@ -36,10 +35,23 @@ def create_implementation(request):
             messages.success(request, (f"Implementation is successfully created"))
             return redirect('update_interface', interface)
     else:
-        form = ImplementationForm(request.POST or None)
-        return render(request, 'create_implementation.html', {'implementation_obj': form})
+        implementation_form = ImplementationForm(request.POST or None)
+        return render(request, 'create_implementation.html', {'implementation_obj': implementation_form})
 
 
 @login_required
 def update_implementation(request):
-    return render(request, 'update_implementation.html')
+    if request.method == "POST":
+        implementation = Implementation.objects.get(pk=implementation_id)
+        implementation_form = ImplementationForm(request.POST or None, instance = implementation)
+        if implementation_form.is_valid():
+            instance = implementation_form.save(commit=False)
+            interface = request.POST.get('interface')
+            instance.save()
+
+            messages.success(request, (f"Implementation is successfully updated"))
+            return redirect('update_interface', interface)
+    else:
+        implementation_obj = Implementation.objects.get(pk=implementation_id)
+        return render(request, 'update_implementation.html', {'implementation_obj': implementation_obj})
+
