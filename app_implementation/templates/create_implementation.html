@@ -7,22 +7,24 @@
 
 {% block content %}
     <div class="container">
-        </br>
-        <h1>Create Interface Implementation</h1>
-        </br>
+        <br/>
+        <h2>Create Interface Implementation</h2>
+        <br/>
 
         <form method="POST">
             {% csrf_token %}
             {{ implementation_obj|crispy }}
-            <div class="input-group p-4">
+            <br/>
+            <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-danger">Save Implementation</button>
             </div>
+            <br/>
         </form>
     </div>
 
-    </br>
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+    <div class="container">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+        </div>
     </div>
 {% endblock content %}

@@ -6,9 +6,9 @@
 
 {% block content %}
     <div class="container">
-        </br>
+        <br/>
         <h2>ACME Interfaces </h2>
-        </br>
+        <br/>
 
         <form role="search" method="get" action=".">
             <div class="d-flex input-group">
@@ -18,7 +18,7 @@
         </form>
 
         {% if interfaces %}
-            </br> </br>
+            <br/> <br/>
             <p><b>Interfaces found: {{ counter }}</b></p>
             
             <table class="table table-bordered table-hover text-center table-striped" id="all_interfaces">
@@ -79,7 +79,7 @@
             </nav>
 
         {% else %}
-            </br> </br>
+            <br/> <br/>
             <div class="alert alert-primary" role="alert">
                 No Interfaces found
             </div>

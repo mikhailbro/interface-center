@@ -6,9 +6,9 @@
 
 {% block content %}
     <div class="container">
-        </br>
+        <br/>
         <h2>My Interfaces</h2>
-        </br>
+        <br/>
         
         {% if messages %}
             {% for message in messages %}
@@ -34,7 +34,7 @@
 
 
         {% if interfaces %}
-            </br> </br>
+            <br/> <br/>
             <p><b>Interfaces found: {{ counter }}</b></p>
 
             <table class="table table-bordered table-hover text-center table-striped" id="my_interfaces">
@@ -89,13 +89,13 @@
             </nav> 
 
         {% else %}
-            </br> </br>
+            <br/> <br/>
             <div class="alert alert-primary" role="alert">
                 No own Interfaces found
             </div>
         {% endif %}   
 
-        </br></br>
+        <br/>
 
         <form method="POST">
             {% csrf_token %}

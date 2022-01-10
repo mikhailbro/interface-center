@@ -7,23 +7,24 @@
 
 {% block content %}
     <div class="container">
-        </br>
-        <h1>Create Interface Review</h1>
-        </br>
+        <br/>
+        <h2>Create Interface Review</h2>
+        <br/>
 
         <form method="POST">
             {% csrf_token %}
             {{ review_obj|crispy }}
-            
-            <div class="input-group p-4">
+            <br/>
+            <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-danger">Save Review</button>
             </div>
+            <br/>
         </form>
     </div>
 
-    </br>
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+    <div class="container">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+        </div>
     </div>
 {% endblock content %}

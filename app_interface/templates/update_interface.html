@@ -7,22 +7,75 @@
 
 {% block content %}
     <div class="container">
-        </br>
-        <h1>Update Interface</h1>
-        </br>
+        <br/>
+        <h2>Update Interface</h2>
+        <br/>
 
         <form method="POST">
             {% csrf_token %}
             {{ interface_obj|crispy }}
-            <div class="input-group p-4">
+            <br/>
+            <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-danger">Save Interface</button>
             </div>
+            <br/>
         </form>
     </div>
 
-    </br>
+    <div class="container">
+        <hr/>
+    </div>
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+    <div class="container">
+        <h3>Interface Implementations:</h3>
+    </div>
+
+    <div class="container">
+        <div class="p-3">
+            {% if implementation_objs %}
+                <ul>
+                    {% for implementation in implementation_objs %}
+                        <li><a href="{% url 'update_implementation' implementation.id %}" class="link-danger"><b>{{implementation}}</b></a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                no implementations found
+            {% endif %}
+        </div>
+    
+        <div class="p-3 bg-light">
+            <form method="POST">
+                {% csrf_token %}
+                <a href="{% url 'create_implementation' %}" class="btn btn-warning"><b>Create New Interface Implementation</b></a>   
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <hr/> <hr/>
+    </div>
+
+    <div class="container">
+        <h3>Interface Reviews:</h3>
+    </div>
+
+    <div class="container">
+        <div class="p-3">
+            {% if review_objs %}
+                <ul>
+                    {% for review in review_objs %}
+                        <li><a href="{% url 'review_details' review.id %}" class="link-primary">{{review}}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                no reviews found
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+        </div>
     </div>
 {% endblock content %}

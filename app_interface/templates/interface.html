@@ -6,18 +6,41 @@
 
 {% block content %}
     <div class="container">
-        </br>
+        <br/>
         <h2>Interface Details</h2>
-        </br>
+        <br/>
     </div>
 
     <div class="container">
         <div class="row g-4">
             <div class="col-6">
-                <div class="p-3 border bg-info">Interface ID: <b>{{ interface_obj.interface_id }}</b></div>
+                <div class="p-3 border bg-success">Interface ID: <b>{{ interface_obj.interface_id }}</b></div>
             </div>
             <div class="col-6">
-                <div class="p-3 border bg-info">Interface Name: <b>{{ interface_obj.name }}</b></div>
+                <div class="p-3 border bg-success">Interface Name: <b>{{ interface_obj.name }}</b></div>
+            </div>
+
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Implementations: 
+                    {% if implementation_objs %}
+                        <ul>
+                            {% for implementation in implementation_objs %}
+                                <li><a href="{% url 'implementation_details' implementation.id %}" class="link-primary"><b>{{implementation}}</b></a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-3 border bg-light">Interface Reviews:
+                    {% if review_objs %}
+                        <ul>
+                            {% for review in review_objs %}
+                                <li><a href="{% url 'review_details' review.id %}" class="link-primary"><b>{{review}}</b></a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
             </div>
 
             <div class="col-6">
@@ -97,32 +120,10 @@
                  </div>
             {% endif %}
 
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Implementations: 
-                    {% if implementation_objs %}
-                        <ul>
-                            {% for implementation in implementation_objs %}
-                                <li><a href="{% url 'implementation_details' implementation.id %}" class="link-primary"><b>{{implementation}}</b></a></li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Reviews:
-                    {% if review_objs %}
-                        <ul>
-                            {% for review in review_objs %}
-                                <li><a href="{% url 'review_details' review.id %}" class="link-primary"><b>{{review}}</b></a></li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
 
             <div class="d-flex p-4">
                 <p class="float-right">
-                    <a href="{% url 'index' %}"><button type="submit" class="btn btn-primary align-self-center">Back to ACME Interfaces</button></a>
+                    <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
                 </p>
             </div>
         </div>

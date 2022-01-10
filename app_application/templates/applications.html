@@ -6,9 +6,9 @@
 
 {% block content %}
     <div class="container">
-        </br>
+        <br/>
         <h2>ACME Applications</h2>
-        </br>
+        <br/>
         
         <form role="search" method="get" action=".">
             <div class="d-flex input-group">
@@ -19,7 +19,7 @@
 
 
         {% if applications %}
-            </br> </br>
+            <br/> <br/>
             <p><b>Applications found: {{ counter }}</b></p>
             <table class="table table-bordered table-hover text-center table-striped" id="applications">
                 <thead class="table-dark">
@@ -61,7 +61,7 @@
                 </ul>
             </nav> 
         {% else %}
-            </br> </br>
+            <br/> <br/>
             <div class="alert alert-primary" role="alert">
                 No applications found
             </div>

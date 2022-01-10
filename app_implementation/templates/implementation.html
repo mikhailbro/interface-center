@@ -6,9 +6,9 @@
 
 {% block content %}
     <div class="container">
-        </br>
+        <br/>
         <h2>Implementation Details</h2>
-        </br>
+        <br/>
     </div>
 
     <div class="container">
@@ -36,7 +36,7 @@
 
             <div class="d-flex p-4">
                 <p class="float-right">
-                    <a href="{% url 'interface_details' implementation_obj.interface.id %}"><button type="submit" class="btn btn-primary">Back to <b>{{ implementation_obj.interface }}</b></button></a>
+                    <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
                 </p>
             </div>
         </div>

@@ -83,7 +83,7 @@ def create_interface(request):
         interface_form = InterfaceForm(request.POST or None)
         if interface_form.is_valid():
             interface_form.save()
-            messages.success(request, (f"Interface is successfully created"))
+            messages.success(request, (f"Interface {interface_form.name} is successfully created. Please specify the corresponding implementations within the interface."))
             return redirect('my_interfaces')
     else:
         interface_obj = InterfaceForm(request.POST or None)
@@ -102,8 +102,14 @@ def update_interface(request, interface_id):
     else:
         interface = Interface.objects.get(pk=interface_id)
         interface_form = InterfaceForm(request.POST or None, instance = interface)
-        return render(request, 'update_interface.html', {'interface_obj': interface_form})
 
+        review_objs = Review.objects.all().filter(interface=interface)
+        implementation_objs = Implementation.objects.all().filter(interface=interface)
+
+        return render(request, 'update_interface.html', {'interface_obj': interface_form, 
+                                                            'implementation_objs': implementation_objs, 
+                                                            'review_objs': review_objs
+                                                        })
 
 
 
