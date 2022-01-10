@@ -42,11 +42,11 @@
                 no implementations found
             {% endif %}
         </div>
-    
+        
         <div class="p-3 bg-light">
             <form method="POST">
                 {% csrf_token %}
-                <a href="{% url 'create_implementation' %}" class="btn btn-warning"><b>Create New Interface Implementation</b></a>   
+                <a href="{% url 'create_implementation' interface_id %}" class="btn btn-warning"><b>Create New Interface Implementation</b></a>   
             </form>
         </div>
     </div>

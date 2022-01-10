@@ -28,13 +28,13 @@ class InterfaceStatusEnum(Enum):
 class Interface(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     owner_application = models.ForeignKey(Application, on_delete=models.DO_NOTHING, default=None)
-    interface_id = models.CharField(max_length=10, default='', verbose_name='Interface ID')
+    interface_id = models.CharField(max_length=31, default='will be assigned automatically', verbose_name='Interface ID')
     name = models.CharField(max_length=100)
     version = models.PositiveIntegerField(default=1)
     description = models.TextField(max_length=500, default='')
     owned_interface = models.BooleanField(default=True)
     created_at = models.DateField(default=datetime.date.today)
-    production_start_at = models.DateField(default=datetime.date.today)
+    production_start_at = models.DateField(default=None)
     decommissioning_at = models.DateField(null=True, blank=True, default=None)
     # business_domain = models.CharField(max_length=50)
     multi_provider = models.BooleanField(default=False)
@@ -108,6 +108,17 @@ class Interface(models.Model):
         default=CommunicationPatternEnum.REQUEST_REPLY,
     )
 
+    class InterfaceTypeEnum(models.TextChoices):
+        API = 'API', ('API')
+        WEB_SERVICE = 'WEB_SERVICE', ('SOAP Web Service')
+        QUEUE = 'QUEUE', ('Queue')
+        FILE_TRANSFER = 'FILE_TRANSFER', ('File Transfer')
+        
+    interface_type = models.CharField(
+        max_length=20,
+        choices=InterfaceTypeEnum.choices,
+        default=None,
+    ) 
 
     def __str__(self):
         return self.name + " (" + self.interface_id + ")"

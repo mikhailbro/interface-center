@@ -39,8 +39,6 @@ def interface_details(request, interface_id):
 
     review_objs = Review.objects.all().filter(interface=interface_obj)
     implementation_objs = Implementation.objects.all().filter(interface=interface_obj)
-    #for idx in range(len(implementation_objs)):
-    #    print("implementation: ", idx, ": ", implementation_objs[idx])
 
     return render(request, 'interface.html', {'interface_obj': interface_obj, 'implementation_objs': implementation_objs, 'review_objs': review_objs})
 
@@ -82,12 +80,43 @@ def create_interface(request):
     if request.method == "POST":
         interface_form = InterfaceForm(request.POST or None)
         if interface_form.is_valid():
-            interface_form.save()
-            messages.success(request, (f"Interface {interface_form.name} is successfully created. Please specify the corresponding implementations within the interface."))
+            instance = interface_form.save(commit=False)
+            
+            if instance.owned_interface:
+                if instance.interface_type == "FILE_TRANSFER":
+                    instance.interface_id = get_interface_id('T', instance.version, instance.name)
+                else:
+                    instance.interface_id = get_interface_id('S', instance.version, instance.name)
+            else:
+                instance.interface_id = get_interface_id('X', instance.version, instance.name)
+
+            instance.save()
+            messages.success(request, (f"Interface is successfully created. Please specify the corresponding implementations within the interface."))
             return redirect('my_interfaces')
     else:
         interface_obj = InterfaceForm(request.POST or None)
         return render(request, 'create_interface.html', {'interface_obj': interface_obj})
+
+
+def get_interface_id(type, version, name):
+    all_interfaces = Interface.objects.all()
+    max_existing_id = 1
+    for idx in range(len(all_interfaces)):
+        if all_interfaces[idx].interface_id.startswith(type):
+            prefix = int(all_interfaces[idx].interface_id[1:5])
+            if prefix >= max_existing_id:
+                max_existing_id = prefix + 1
+
+            undescore_position = name.find("_")
+            if all_interfaces[idx].name.startswith(name[0:undescore_position]):
+                max_existing_id = prefix
+                break
+
+    max_existing_id_str = str(max_existing_id).zfill(4)
+    version_str = str(version).zfill(3)
+
+    return f"{type}{max_existing_id_str}_{version_str}"
+
 
 
 @login_required
@@ -106,10 +135,7 @@ def update_interface(request, interface_id):
         review_objs = Review.objects.all().filter(interface=interface)
         implementation_objs = Implementation.objects.all().filter(interface=interface)
 
-        return render(request, 'update_interface.html', {'interface_obj': interface_form, 
-                                                            'implementation_objs': implementation_objs, 
-                                                            'review_objs': review_objs
-                                                        })
+        return render(request, 'update_interface.html', {'interface_obj': interface_form, 'implementation_objs': implementation_objs, 'review_objs': review_objs, 'interface_id': interface_id})
 
 
 

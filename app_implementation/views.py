@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from app_implementation.models import Implementation
 from app_implementation.forms import ImplementationForm
+from app_interface.models import Interface
+from app_interface.forms import InterfaceForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -24,7 +26,7 @@ def implementation_details(request, implementation_id):
 
 
 @login_required
-def create_implementation(request):
+def create_implementation(request, interface_id):
     if request.method == "POST":
         implementation_form = ImplementationForm(request.POST or None)
         if implementation_form.is_valid():
@@ -35,8 +37,14 @@ def create_implementation(request):
             messages.success(request, (f"Implementation is successfully created"))
             return redirect('update_interface', interface)
     else:
-        implementation_form = ImplementationForm(request.POST or None)
-        return render(request, 'create_implementation.html', {'implementation_obj': implementation_form})
+        interface = Interface.objects.get(pk=interface_id)
+        init_implementation_form = {
+            'interface': interface, 
+            'provider': interface.owner_application,
+            'implementation_type': interface.interface_type
+        }
+        implementation_form = ImplementationForm(request.POST or None, initial=init_implementation_form)
+        return render(request, 'create_implementation.html', {'implementation_obj': implementation_form, 'interface_obj':interface})
 
 
 @login_required
