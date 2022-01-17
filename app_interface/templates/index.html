@@ -24,12 +24,12 @@
             <table class="table table-bordered table-hover text-center table-striped" id="all_interfaces">
                 <thead class="table-dark" >
                     <tr scope="row">
-                        <th scope="col-1">Interface ID</th>
+                        <th scope="col-1">ID</th>
                         <th scope="col-3">Name</th>
                         <th scope="col-1">Status</th>
-                        <th scope="col-3">Contract URL</th>
-                        <th scope="col-2">Owner App</th>
-                        <th scope="col-2">Owner</th>
+                        <th scope="col-2">Type</th>
+                        <th scope="col-2">Contract URL</th>
+                        <th scope="col-3">Description</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,15 +38,24 @@
                             <td scope="col-1"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.interface_id }}</a></td>
                             <td scope="col-3"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.name }}</a></td>
                             <td scope="col-1"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.status }}</a></td>
-                            <td scope="col-3">
+                            <td scope="col-2"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.interface_type }}</a></td>
+                            <td scope="col-2">
                                 {% if obj.contract_description %}
+                                <span class="d-inline-block text-truncate" style="max-width: 150px;">
                                     <a href="{{ obj.contract_description }}" class="link-success" target="_blank">{{ obj.contract_description }}</a>
+                                </span>
                                 {% endif %}
                             </td>
+                            <td scope="col-3">
+                                <span class="d-inline-block text-truncate" style="max-width: 180px;">
+                                    <a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.description }}</a>
+                                </span>
+                            </td>
+                        
+                            <!-- 
                             <td scope="col-2"><a href="{% url 'application_details' obj.owner_application.id %}" class="link-info">{{ obj.owner_application }}</a></td>
                             <td scope="col-2">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
 
-                            <!-- 
                             <td scope="col-3"><a href="{% url 'pending_interface' obj.id %}" class="btn btn-outline-success">&nbsp;&nbsp;Mark Interface pending&nbsp;&nbsp;</a></td>
                             <td scope="col-1"><a href="{% url 'update_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
                             <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete Interface</a></td>

@@ -7,6 +7,8 @@ from app_implementation.models import Implementation
 from app_implementation.forms import ImplementationForm
 from app_review.models import Review
 from app_review.forms import ReviewForm
+from app_application.models import Application
+
 
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -22,7 +24,7 @@ def index(request):
     if query == '':
         all_interfaces = Interface.objects.all()
     else:
-        all_interfaces = Interface.objects.filter(Q(interface_id__icontains=query) | Q(name__icontains=query) | Q(status__icontains=query) | Q(contract_description__icontains=query))
+        all_interfaces = Interface.objects.filter(Q(interface_id__icontains=query) | Q(name__icontains=query) | Q(status__icontains=query) | Q(interface_type__icontains=query) | Q(contract_description__icontains=query) | Q(description__icontains=query))
     
     counter = all_interfaces.__len__
 
@@ -63,7 +65,7 @@ def my_interfaces(request):
         if query == '':
             my_interfaces = Interface.objects.filter(owner=request.user)
         else:
-            my_interfaces = Interface.objects.filter(Q(interface_id__icontains=query) | Q(name__icontains=query) | Q(status__icontains=query) | Q(contract_description__icontains=query)).filter(owner=request.user)
+            my_interfaces = Interface.objects.filter(Q(interface_id__icontains=query) | Q(name__icontains=query) | Q(status__icontains=query) | Q(interface_type__icontains=query) | Q(contract_description__icontains=query) | Q(description__icontains=query)).filter(owner=request.user)
 
         counter = my_interfaces.__len__
 
@@ -84,11 +86,11 @@ def create_interface(request):
             
             if instance.owned_interface:
                 if instance.interface_type == "FILE_TRANSFER":
-                    instance.interface_id = get_interface_id('T', instance.version, instance.name)
+                    instance.interface_id = create_interface_id('T', instance.version, instance.name)
                 else:
-                    instance.interface_id = get_interface_id('S', instance.version, instance.name)
+                    instance.interface_id = create_interface_id('S', instance.version, instance.name)
             else:
-                instance.interface_id = get_interface_id('X', instance.version, instance.name)
+                instance.interface_id = create_interface_id('X', instance.version, instance.name)
 
             instance.save()
             messages.success(request, (f"Interface is successfully created. Please specify the corresponding implementations within the interface."))
@@ -98,7 +100,7 @@ def create_interface(request):
         return render(request, 'create_interface.html', {'interface_obj': interface_obj})
 
 
-def get_interface_id(type, version, name):
+def create_interface_id(type, version, name):
     all_interfaces = Interface.objects.all()
     max_existing_id = 1
     for idx in range(len(all_interfaces)):

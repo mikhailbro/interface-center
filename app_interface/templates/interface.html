@@ -50,7 +50,7 @@
                 </tr>
                 <tr>
                     <th scope="row">Interface Application Owner</th>
-                    <td><a href="{% url 'application_details' interface_obj.owner.id %}">{{ interface_obj.owner_application }}</a></td>
+                    <td><a href="{% url 'application_details' interface_obj.owner_application.id %}">{{ interface_obj.owner_application }}</a></td>
                 </tr>
                 <tr>
                     <th scope="row">Interface Owner</th>
@@ -59,6 +59,10 @@
                 <tr>
                     <th scope="row">Interface Status</th>
                     <td>{{ interface_obj.status }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Type</th>
+                    <td>{{ interface_obj.interface_type }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Interface Origin</th>
