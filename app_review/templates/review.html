@@ -12,31 +12,42 @@
     </div>
 
     <div class="container">
-        <div class="row g-4">
-            <div class="col-6">
-                <div class="p-3 border bg-info">Interface: <a href="{% url 'interface_details' review_obj.interface.id %}" class="link-primary"><b>{{ review_obj.interface }}</b></a></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border bg-info">Review Status: <b>{{ review_obj.review_status }}</b></div>
-            </div>
-            
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Review Requestor: <b>{{ review_obj.requestor.first_name }} {{ review_obj.requestor.last_name }}</b></a></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Reviewer: <b>{{ review_obj.reviewer.first_name }} {{ review_obj.reviewer.last_name }}</b></div>
-            </div>
-            
-            <div class="col-6">
-                <div class="p-3 border bg-light">Review created at: <b>{{ review_obj.created_at }}</b></div>
-            </div>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="row" class="text-center" colspan="2">{{ review_obj }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Interface</th>
+                    <td><a href="{% url 'interface_details' review_obj.interface.id %}" class="link-primary">{{ review_obj.interface }}</a></td>
+                </tr>
+                <tr>
+                    <th scope="row">Review Status</th>
+                    <td>{{ review_obj.review_status }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Review Requestor</th>
+                    <td>{{ review_obj.requestor.first_name }} {{ review_obj.requestor.last_name }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Reviewer</th>
+                    <td>{{ review_obj.reviewer.first_name }} {{ review_obj.reviewer.last_name }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Review created at</th>
+                    <td>{{ review_obj.created_at }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-            <div class="container">
-                <div class="d-flex p-4">
-                    <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
-                </div>
+        <div class="container">
+            <div class="d-flex p-4">
+                <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
             </div>
         </div>
+       
     </div>
 
 {% endblock content %}

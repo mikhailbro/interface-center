@@ -12,24 +12,32 @@
     </div>
 
     <div class="container">
-        <div class="row g-4">
-            <div class="col-3">
-                <div class="p-3 border bg-light">APP-ID: <b>{{ application_obj.app_id }}</b></div>
-            </div>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="row" class="text-center" colspan="2">{{ application_obj }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">APP-ID</th>
+                <td>{{ application_obj.app_id }}</td>
+                </tr>
+                <tr>
+                <th scope="row">Application Shortname</th>
+                <td>{{ application_obj.short_name }}</td>
+                </tr>
+                <tr>
+                <th scope="row">Application Mail</th>
+                <td>{{ application_obj.mail_address }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-            <div class="col-4">
-                <div class="p-3 border bg-light">Application Shortname: <b>{{ application_obj.short_name }}</b></div>
-            </div>
-            
-            <div class="col-5">
-                <div class="p-3 border bg-light">Application Mail: <b>{{ application_obj.mail_address }}</b></div>
-            </div>
-
-            <div class="container">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
-                </div>
-            </div>
+        <div class="d-flex p-4">
+            <p class="float-right">
+                <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
+            </p>
         </div>
     </div>
 

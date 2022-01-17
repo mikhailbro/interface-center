@@ -12,33 +12,40 @@
     </div>
 
     <div class="container">
-        <div class="row g-4">
-            <div class="col-6">
-                <div class="p-3 border bg-info">Interface: <a href="{% url 'interface_details' implementation_obj.interface.id %}" class="link-primary"><b>{{ implementation_obj.interface }}</b></a></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border bg-info">Implementation Basepath: <b>{{ implementation_obj.provider_basepath }}</b></div>
-            </div>
-            
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Implementation Provider: <a href="{% url 'application_details' implementation_obj.provider.id %}" class="link-primary"><b>{{ implementation_obj.provider }}</b></a></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Implementation Type: <b>{{ implementation_obj.implementation_type }}</b></div>
-            </div>
-            
-            <div class="col-6">
-                <div class="p-3 border bg-light">Implementation Counter: <b>{{ implementation_obj.implementation_counter }}</b></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3">&nbsp;</div>
-            </div>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="row" class="text-center" colspan="2">{{ implementation_obj }}</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Interface</th>
+                <td><a href="{% url 'interface_details' implementation_obj.interface.id %}" class="link-primary">{{ implementation_obj.interface }}</a></td>
+              </tr>
+              <tr>
+                <th scope="row">Implementation Basepath</th>
+                <td>{{ implementation_obj.provider_basepath }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Implementation Provider</th>
+                <td><a href="{% url 'application_details' implementation_obj.provider.id %}" class="link-primary">{{ implementation_obj.provider }}</a></td>
+              </tr>
+              <tr>
+                <th scope="row">Implementation Type</th>
+                <td>{{ implementation_obj.implementation_type }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Implementation Counter</th>
+                <td>{{ implementation_obj.implementation_counter }}</td>
+              </tr>
+            </tbody>
+        </table>
 
-            <div class="d-flex p-4">
-                <p class="float-right">
-                    <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
-                </p>
-            </div>
+        <div class="d-flex p-4">
+            <p class="float-right">
+                <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
+            </p>
         </div>
     </div>
 

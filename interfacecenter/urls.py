@@ -34,3 +34,7 @@ urlpatterns = [
 
     path('account/', include('app_user.urls')),
 ]
+
+# admin.site.site_header = 'ACME Interface Center Administration'
+# admin.site.site_title  =  "ACME IC admin site"
+# admin.site.index_title  =  "ACME IC Admin"

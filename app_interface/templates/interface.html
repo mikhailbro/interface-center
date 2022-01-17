@@ -12,120 +12,134 @@
     </div>
 
     <div class="container">
-        <div class="row g-4">
-            <div class="col-6">
-                <div class="p-3 border bg-success">Interface ID: <b>{{ interface_obj.interface_id }}</b></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border bg-success">Interface Name: <b>{{ interface_obj.name }}</b></div>
-            </div>
-
-            <div class="col-6">
-                <div class="p-3 border bg-light">Interface Implementations: 
-                    {% if implementation_objs %}
-                        <ul>
+       <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Interface ID</th>
+                    <th>{{ interface_obj.interface_id }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Interface Name</th>
+                    <td>{{ interface_obj.name}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Implementations</th>
+                    <td>
+                        {% if implementation_objs %}
+                        <dl class="list-group">
                             {% for implementation in implementation_objs %}
-                                <li><a href="{% url 'implementation_details' implementation.id %}" class="link-primary"><b>{{implementation}}</b></a></li>
+                                <dd><a href="{% url 'implementation_details' implementation.id %}">{{implementation}}</a></dd>
                             {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border bg-light">Interface Reviews:
-                    {% if review_objs %}
-                        <ul>
+                        </dl>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Reviews</th>
+                    <td>
+                        {% if review_objs %}
+                        <dl class="list-group">
                             {% for review in review_objs %}
-                                <li><a href="{% url 'review_details' review.id %}" class="link-primary"><b>{{review}}</b></a></li>
+                                <dd><a href="{% url 'review_details' review.id %}">{{review}}</a></dd>
                             {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
+                        </dl>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Application Owner</th>
+                    <td><a href="{% url 'application_details' interface_obj.owner.id %}">{{ interface_obj.owner_application }}</a></td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Owner</th>
+                    <td>{{ interface_obj.owner.first_name }} {{ interface_obj.owner.last_name }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Status</th>
+                    <td>{{ interface_obj.status }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Origin</th>
+                    <td>{{ interface_obj.model_origin }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Version</th>
+                    <td>{{ interface_obj.version }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Info Classification</th>
+                    <td>{{ interface_obj.info_classification }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Contract URL</th>
+                    <td>
+                        {% if interface_obj.contract_description %}
+                            <a href="{{ interface_obj.contract_description }}" target="_blank">{{ interface_obj.contract_description }}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Description</th>
+                    <td>{{ interface_obj.description }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Created at</th>
+                    <td>{{ interface_obj.created_at }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Production Started at</th>
+                    <td>{{ interface_obj.production_start_at }}</td>
+                </tr>
+                {% if interface_obj.decommissioning_at %}
+                    <tr>
+                        <th scope="row">Interface Decommissioning at</th>
+                        <td>{{ interface_obj.decommissioning_at }}</td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th scope="row">Interface Communication Pattern</th>
+                    <td>{{ interface_obj.communication_pattern }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Accessibility</th>
+                    <td>{{ interface_obj.accessibility }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Infoflow Direction</th>
+                    <td>{{ interface_obj.infoflow_direction }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Multi Provider</th>
+                    <td>{{ interface_obj.multi_provider }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Owned Interface</th>
+                    <td>{{ interface_obj.owned_interface }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Restriction</th>
+                    <td>{{ interface_obj.restriction }}</td>
+                </tr>
+                {% if interface_obj.restriction %}
+                    <tr>
+                        <th scope="row">Interface Restriction Code</th>
+                        <td>{{ interface_obj.restriction_code }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Interface Restriction Text</th>
+                        <td>{{ interface_obj.restriction_text }}</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
 
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Application Owner: <a href="{% url 'application_details' interface_obj.owner.id %}" class="link-primary">
-                    <b>{{ interface_obj.owner_application }}</b></a>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Owner: <b>{{ interface_obj.owner.first_name }} {{ interface_obj.owner.last_name }}</b></div>
-            </div>
 
-            <div class="col-6">
-                <div class="p-3 border bg-light">Interface Status: <b>{{ interface_obj.status }}</b></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border bg-light">Interface Model Origin: <b>{{ interface_obj.model_origin }}</b></div>
-            </div>
-
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Version: <b>{{ interface_obj.version }}</b></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Info Classification: <b>{{ interface_obj.info_classification }}</b></div>
-            </div>
-
-            <div class="col-6">
-                <div class="p-3 border bg-light">Interface Contract URL: 
-                    {% if interface_obj.contract_description %}
-                        <a href="{{ interface_obj.contract_description }}" target="_blank"><b>{{ interface_obj.contract_description }}</b></a>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border bg-light">Interface Description: <b>{{ interface_obj.description }}</b></div>
-            </div>
-            
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Creation Day: <b>{{ interface_obj.created_at }}</b></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Production Start: <b>{{ interface_obj.production_start_at }}</b></div>
-            </div>
-
-            <div class="col-6">
-                <div class="p-3 border bg-light">Interface Communication Pattern: <b>{{ interface_obj.communication_pattern }}</b></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border bg-light">Interface Accessibility: <b>{{ interface_obj.accessibility }}</b></div>
-            </div>
-
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Infoflow Direction: <b>{{ interface_obj.infoflow_direction }}</b></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border" style="background-color: #e3f2fd;">Interface Multi Provider: <b>{{ interface_obj.multi_provider }}</b></div>
-            </div>
-
-            <div class="col-6">
-                <div class="p-3 border bg-light">Interface Restriction: <b>{{ interface_obj.restriction }}</b></div>
-            </div>
-            <div class="col-6">
-                <div class="p-3 border bg-light">Owned Interface: <b>{{ interface_obj.owned_interface }}</b></div>
-            </div>
-
-            {% if interface_obj.restriction %}
-                <div class="col-6">
-                    <div class="p-3 border" style="background-color: #e3f2fd;">Interface Restriction Code: <b>{{ interface_obj.restriction_code }}</b></div>
-                </div>
-                <div class="col-6">
-                    <div class="p-3 border" style="background-color: #e3f2fd;">Interface Restriction Text: <b>{{ interface_obj.restriction_text }}</b></div>
-                </div>
-            {% endif %}
-
-            {% if interface_obj.decommissioning_at %}
-                <div class="col-6">
-                    <div class="p-3 border bg-light">Interface Decommissionning At: <b>{{ interface_obj.decommissioning_at }}</b></div>
-                 </div>
-            {% endif %}
-
-
-            <div class="d-flex p-4">
-                <p class="float-right">
-                    <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
-                </p>
-            </div>
+        <div class="d-flex p-4">
+            <p class="float-right">
+                <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
+            </p>
         </div>
     </div>
 
