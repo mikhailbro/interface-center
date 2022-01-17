@@ -29,7 +29,7 @@ def index(request):
     counter = all_interfaces.__len__
 
     # Pagination:
-    paginator_all_interfaces = Paginator(all_interfaces, 10)
+    paginator_all_interfaces = Paginator(all_interfaces, 25)
     page = request.GET.get('pg')
     all_interfaces = paginator_all_interfaces.get_page(page)
 
@@ -70,7 +70,7 @@ def my_interfaces(request):
         counter = my_interfaces.__len__
 
         # Pagination:
-        paginator_my_interfaces = Paginator(my_interfaces, 10)
+        paginator_my_interfaces = Paginator(my_interfaces, 25)
         page = request.GET.get('pg')
         my_interfaces = paginator_my_interfaces.get_page(page)
 
