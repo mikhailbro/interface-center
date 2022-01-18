@@ -38,11 +38,14 @@ def create_implementation(request, interface_id):
             return redirect('update_interface', interface)
     else:
         interface = Interface.objects.get(pk=interface_id)
+            
+        # prefilling:
         init_implementation_form = {
             'interface': interface, 
             'provider': interface.owner_application,
             'implementation_type': interface.interface_type
         }
+        
         implementation_form = ImplementationForm(request.POST or None, initial=init_implementation_form)
         return render(request, 'create_implementation.html', {'implementation_obj': implementation_form, 'interface_obj':interface})
 
@@ -53,6 +56,10 @@ def update_implementation(request, implementation_id):
         implementation = Implementation.objects.get(pk=implementation_id)
         implementation_form = ImplementationForm(request.POST or None, instance = implementation)
         if implementation_form.is_valid():
+            implementation.consumers.set([])
+            for consumer in implementation_form.cleaned_data['consumers']:
+                implementation.consumers.add(consumer)
+                
             instance = implementation_form.save(commit=False)
             interface = request.POST.get('interface')
             instance.save()

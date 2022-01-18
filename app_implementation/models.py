@@ -7,9 +7,10 @@ from app_application.models import Application
 # Create your models here.
 class Implementation(models.Model):
     interface = models.ForeignKey(Interface, on_delete=models.CASCADE, default=None)
-    provider = models.ForeignKey(Application, on_delete=models.DO_NOTHING, default=None)
+    provider = models.ForeignKey(Application, on_delete=models.DO_NOTHING, default=None, related_name='provider')
     provider_basepath = models.CharField(max_length=100, default='')
     implementation_counter = models.PositiveIntegerField(default=1)
+    consumers = models.ManyToManyField(Application, blank=True, related_name='consumers')
 
     class ImplementationTypeEnum(models.TextChoices):
         API = 'API', ('API')

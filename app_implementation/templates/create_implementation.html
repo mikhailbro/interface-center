@@ -13,8 +13,25 @@
 
         <form method="POST">
             {% csrf_token %}
-            {{ implementation_obj|crispy }}
-            <br/>
+            {{implementation_obj.interface|as_crispy_field}}
+            {{implementation_obj.provider|as_crispy_field}}
+
+            <!--
+            <label for="provider" class="form-label">Provider*</label><br/>
+            <input class="form-control" list="provider" id="provider_datalist" placeholder="Search Provider Application..." />
+            <datalist id="provider">
+                {% for application in application_objs %}
+                    <option value="{{ implementation_obj.provider }}">{{ application }}</option>
+                {% endfor %}
+            </datalist>
+            </br>
+            -->
+            
+            {{implementation_obj.implementation_type|as_crispy_field}}
+            {{implementation_obj.provider_basepath|as_crispy_field}}
+            {{implementation_obj.implementation_counter|as_crispy_field}}
+
+           
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-danger">Save Implementation</button>
             </div>
