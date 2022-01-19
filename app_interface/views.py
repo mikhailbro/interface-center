@@ -84,18 +84,25 @@ def create_interface(request):
         if interface_form.is_valid():
             instance = interface_form.save(commit=False)
             
-            # automatic assignment:
-            if instance.owned_interface:
-                if instance.interface_type == "FILE_TRANSFER":
-                    instance.interface_id = create_interface_id('T', instance.version, instance.name)
-                else:
-                    instance.interface_id = create_interface_id('S', instance.version, instance.name)
-            else:
-                instance.interface_id = create_interface_id('X', instance.version, instance.name)
+            # validation:
+            interface_validation = validation(instance)
+            if len(interface_validation) > 0:
+                messages.error(request, (interface_validation))
+                return redirect('create_interface')
 
-            instance.save()
-            messages.success(request, (f"Interface '{instance}' wurde erfolgreich angelegt. Implementations sollen direkt im Interface eingetragen werden."))
-            return redirect('my_interfaces')
+            else:    
+                # automatic assignment:
+                if instance.owned_interface:
+                    if instance.interface_type == "FILE_TRANSFER":
+                        instance.interface_id = create_interface_id('T', instance.version, instance.name)
+                    else:
+                        instance.interface_id = create_interface_id('S', instance.version, instance.name)
+                else:
+                    instance.interface_id = create_interface_id('X', instance.version, instance.name)
+
+                instance.save()
+                messages.success(request, (f"Interface '{instance}' wurde erfolgreich angelegt. Implementations sollen direkt im Interface eingetragen werden."))
+                return redirect('my_interfaces')
     else:
         # prefilling:
         init_implementation_form = {
@@ -134,9 +141,17 @@ def update_interface(request, interface_id):
         interface_form = InterfaceForm(request.POST or None, instance = interface)
         if interface_form.is_valid():
             instance = interface_form.save(commit=False)
-            instance.save()
-            messages.success(request, (f"Interface '{instance}' wurde erfolgreich aktualisiert"))
-            return redirect('my_interfaces')
+
+            # validation:
+            interface_validation = validation(interface)
+            if len(interface_validation) > 0:
+                messages.error(request, (interface_validation))
+                return redirect('update_interface', interface_id)
+
+            else:    
+                instance.save()
+                messages.success(request, (f"Interface '{instance}' wurde erfolgreich aktualisiert"))
+                return redirect('my_interfaces')
     else:
         interface = Interface.objects.get(pk=interface_id)
         interface_form = InterfaceForm(request.POST or None, instance = interface)
@@ -145,3 +160,17 @@ def update_interface(request, interface_id):
         implementation_objs = Implementation.objects.all().filter(interface=interface)
 
         return render(request, 'update_interface.html', {'interface_obj': interface_form, 'implementation_objs': implementation_objs, 'review_objs': review_objs, 'interface_id': interface_id})
+
+
+def validation(interface_obj):
+    result = ''
+    
+    if interface_obj.restriction:
+        if (interface_obj.restriction_code is None or len(interface_obj.restriction_code.strip()) == 0 or interface_obj.restriction_text is None or len(interface_obj.restriction_text.strip()) == 0):
+            result = f"Bitte trage Restriction Code und Restriction Text ein, falls eine Restriction gewünscht ist"
+
+    if not interface_obj.restriction:
+        if ((not interface_obj.restriction_code is None and len(interface_obj.restriction_code.strip()) > 0) or (not interface_obj.restriction_text is None and len(interface_obj.restriction_text.strip()) > 0)):
+            result = f"Bitte deklariere eine Restriction zu Restriction Code und Restriction Text ein, falls eine Restriction gewünscht ist"
+
+    return result

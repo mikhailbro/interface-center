@@ -19,6 +19,21 @@
             </div>
         </div> 
         <br/>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible fade show
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    alert-success" role="alert">
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    alert-danger" role="alert">
+                {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
         <form method="POST">
             {% csrf_token %}
             {{ implementation_obj|crispy }}

@@ -10,6 +10,7 @@ class InterfaceForm(forms.ModelForm):
        super(InterfaceForm, self).__init__(*args, **kwargs)
        self.fields['interface_id'].widget.attrs['readonly'] = True
        self.fields['owner'].widget.attrs['readonly'] = True
+       self.fields['status'].widget.attrs['readonly'] = True
        #self.fields['interface_id'].widget = HiddenInput()
 
     class Meta:

@@ -34,13 +34,20 @@ def create_implementation(request, interface_id):
             interface = request.POST.get('interface')
             provider = request.POST.get('provider')
 
-            # automatic assignment:
-            instance.implementation_counter = create_implementation_counter(interface, provider)
+            # validation:
+            implementation_validation = validation(instance, interface)
+            if len(implementation_validation) > 0:
+                messages.error(request, (implementation_validation))
+                return redirect('create_implementation', interface)
 
-            instance.save()
+            else:
+                # automatic assignment:
+                instance.implementation_counter = create_implementation_counter(interface, provider)
 
-            messages.success(request, (f"Implementation '{instance}' wurde erfolgreich angelegt"))
-            return redirect('update_interface', interface)
+                instance.save()
+
+                messages.success(request, (f"Implementation '{instance}' wurde erfolgreich angelegt"))
+                return redirect('update_interface', interface)
     else:
         interface = Interface.objects.get(pk=interface_id)
             
@@ -65,18 +72,38 @@ def update_implementation(request, implementation_id):
         implementation = Implementation.objects.get(pk=implementation_id)
         implementation_form = ImplementationForm(request.POST or None, instance = implementation)
         if implementation_form.is_valid():
-            implementation.consumers.set([])
-            for consumer in implementation_form.cleaned_data['consumers']:
-                implementation.consumers.add(consumer)
-                
             instance = implementation_form.save(commit=False)
             interface = request.POST.get('interface')
-            instance.save()
+                
+            # validation:
+            implementation_validation = validation(instance, interface)
+            if len(implementation_validation) > 0:
+                messages.error(request, (implementation_validation))
+                return redirect('update_implementation', interface)
+                
+            else:
+                implementation.consumers.set([])
+                for consumer in implementation_form.cleaned_data['consumers']:
+                    implementation.consumers.add(consumer)
+                
+                instance.save()
 
-            messages.success(request, (f"Implementation '{instance}' wurde erfolgreich aktualisiert"))
-            return redirect('update_interface', interface)
+                messages.success(request, (f"Implementation '{instance}' wurde erfolgreich aktualisiert"))
+                return redirect('update_interface', interface)
     else:
         implementation = Implementation.objects.get(pk=implementation_id)
         implementation_form = ImplementationForm(request.POST or None, instance = implementation)
         return render(request, 'update_implementation.html', {'implementation_obj': implementation_form, 'interface': implementation.interface})
+
+
+
+def validation(implementation_obj, interface_id):
+    result = ''
+    interface = Interface.objects.get(pk=interface_id)
+
+    if not interface.multi_provider:
+        if interface.owner_application != implementation_obj.provider:
+            result = f"Interface '{interface}' ist kein Multi-Provider Interface! Es darf nur Application '{interface.owner_application}' als Implementation Provider deklariert werden!"
+
+    return result
 
