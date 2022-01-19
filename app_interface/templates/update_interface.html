@@ -65,10 +65,12 @@
             {% endif %}
         </div>
         
-        <div class="p-3 bg-light">
+        <div class="p-3 d-grid gap-2">
             <form method="POST">
                 {% csrf_token %}
-                <a href="{% url 'create_implementation' interface_id %}" class="btn btn-warning"><b>Create Interface Implementation</b></a>   
+                <div class="d-grid gap-2">
+                    <a href="{% url 'create_implementation' interface_id %}" class="btn btn-warning"><b>Create Interface Implementation</b></a>
+                </div>
             </form>
         </div>
     </div>
