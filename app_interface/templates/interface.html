@@ -28,11 +28,11 @@
                     <th scope="row">Interface Implementations</th>
                     <td>
                         {% if implementation_objs %}
-                        <dl class="list-group">
-                            {% for implementation in implementation_objs %}
-                                <dd><a href="{% url 'implementation_details' implementation.id %}">{{implementation}}</a></dd>
-                            {% endfor %}
-                        </dl>
+                            <dl class="list-group">
+                                {% for implementation in implementation_objs %}
+                                    <dd><a href="{% url 'implementation_details' implementation.id %}">{{implementation}}</a></dd>
+                                {% endfor %}
+                            </dl>
                         {% endif %}
                     </td>
                 </tr>
@@ -63,6 +63,10 @@
                 <tr>
                     <th scope="row">Interface Type</th>
                     <td>{{ interface_obj.interface_type }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Business Domain</th>
+                    <td>{{ interface_obj.business_domain }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Interface Origin</th>

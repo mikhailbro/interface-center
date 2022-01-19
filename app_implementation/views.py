@@ -43,11 +43,16 @@ def create_implementation(request, interface_id):
         init_implementation_form = {
             'interface': interface, 
             'provider': interface.owner_application,
-            'implementation_type': interface.interface_type
+            'implementation_type': interface.interface_type,
+            'implementation_counter': create_implementation_counter(interface)
         }
         
         implementation_form = ImplementationForm(request.POST or None, initial=init_implementation_form)
         return render(request, 'create_implementation.html', {'implementation_obj': implementation_form, 'interface_obj':interface})
+
+def create_implementation_counter(interface_obj):
+    interface_implementations = Implementation.objects.all().filter(interface=interface_obj)
+    return (len(interface_implementations) + 1)
 
 
 @login_required

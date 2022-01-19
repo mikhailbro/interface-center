@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from app_application.models import Application
-from app_application.forms import ApplicationForm
+from app_interface.models import Interface
+from app_implementation.models import Implementation
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -27,4 +28,21 @@ def applications(request):
 
 def details(request, application_id):
     application_obj = Application.objects.get(pk=application_id)
-    return render(request, 'application.html', {'application_obj': application_obj})
+    owned_interface_objs = search_owned_interfaces(application_obj)
+    provided_implementation_objs = search_provided_implementations(application_obj)
+    consumed_implementation_objs = search_consumed_implementations(application_obj)
+
+
+    return render(request, 'application.html', {'application_obj': application_obj, 'owned_interface_objs': owned_interface_objs, 'provided_implementation_objs': provided_implementation_objs, 'consumed_implementation_objs': consumed_implementation_objs})
+
+def search_owned_interfaces(application_obj):
+    interface_objs = Interface.objects.filter(owner_application=application_obj)
+    return interface_objs
+
+def search_provided_implementations(application_obj):
+    implementation_objs = Implementation.objects.filter(provider=application_obj)
+    return implementation_objs
+
+def search_consumed_implementations(application_obj):
+    implementation_objs = Implementation.objects.filter(consumers=application_obj)
+    return implementation_objs

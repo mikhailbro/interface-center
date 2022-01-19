@@ -53,9 +53,9 @@ def my_interfaces(request):
             instance = form.save(commit=False)
             instance.owner = request.user
             instance.save()
-            messages.success(request, ("New interface is successfully added!"))
+            messages.success(request, ("Interface erfolgreich gespeichert"))
         else: 
-            messages.error(request, ("New interface couldn't be saved!"))
+            messages.error(request, ("Interface konnte nicht gespeichert werden!"))
         return redirect('my_interfaces')
     else:
         # MY INTERFACES:
@@ -84,6 +84,7 @@ def create_interface(request):
         if interface_form.is_valid():
             instance = interface_form.save(commit=False)
             
+            # assigned automatically:
             if instance.owned_interface:
                 if instance.interface_type == "FILE_TRANSFER":
                     instance.interface_id = create_interface_id('T', instance.version, instance.name)
@@ -93,10 +94,15 @@ def create_interface(request):
                 instance.interface_id = create_interface_id('X', instance.version, instance.name)
 
             instance.save()
-            messages.success(request, (f"Interface is successfully created. Please specify the corresponding implementations within the interface."))
+            messages.success(request, (f"Interface wurde erfolgreich angelegt. Implementations sollen direkt im Interface eingetragen werden."))
             return redirect('my_interfaces')
     else:
-        interface_obj = InterfaceForm(request.POST or None)
+        # prefilling:
+        init_implementation_form = {
+            'owner': request.user
+        }
+        
+        interface_obj = InterfaceForm(request.POST or None, initial=init_implementation_form)
         return render(request, 'create_interface.html', {'interface_obj': interface_obj})
 
 
@@ -128,7 +134,7 @@ def update_interface(request, interface_id):
         interface_form = InterfaceForm(request.POST or None, instance = interface)
         if interface_form.is_valid():
             interface_form.save()
-            messages.success(request, (f"Interface is successfully updated"))
+            messages.success(request, (f"Interface wurde erfolgreich aktualisiert"))
             return redirect('my_interfaces')
     else:
         interface = Interface.objects.get(pk=interface_id)
@@ -138,45 +144,3 @@ def update_interface(request, interface_id):
         implementation_objs = Implementation.objects.all().filter(interface=interface)
 
         return render(request, 'update_interface.html', {'interface_obj': interface_form, 'implementation_objs': implementation_objs, 'review_objs': review_objs, 'interface_id': interface_id})
-
-
-
-
-@login_required
-def delete_interface(request, interface_id):
-    interface = Interface.objects.get(pk=interface_id)
-    if interface.owner == request.user:
-        interface.delete()
-        messages.success(request, (f"Interface '{interface.name}' is successfully deleted!"))
-    else:
-        messages.error(request, ("Access restricted, you are NOT allowed!"))
-
-    return redirect('my_interfaces')
-
-
-
-@login_required
-def complete_interface(request, interface_id):
-    interface = Interface.objects.get(pk=interface_id)
-    if interface.owner == request.user:
-        interface.isOwned = True
-        interface.save()
-        messages.success(request, (f"Interface '{interface.name}' is successfully completed"))
-    else:
-        messages.error(request, ("Access restricted, you are NOT allowed!"))
-
-    return redirect('my_interfaces')
-
-
-@login_required
-def pending_interface(request, interface_id):
-    interface = Interface.objects.get(pk=interface_id)
-    if interface.owner == request.user:
-        interface.isOwned = False
-        interface.save()
-        messages.success(request, (f"Interface '{interface.name}' is opened again"))
-    else:
-        messages.error(request, ("Access restricted, you are NOT allowed!"))
-
-    return redirect('my_interfaces')
-

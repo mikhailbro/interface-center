@@ -12,15 +12,15 @@
         
         <form role="search" method="get" action=".">
             <div class="d-flex input-group">
-                <input type="search" class="form-control" name="q" id="q" placeholder="Search Applications..." value="{{request.GET.q}}">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <input type="search" class="form-control" name="q" id="q" placeholder="Suche Applications..." value="{{request.GET.q}}">
+                <button type="submit" class="btn btn-primary">Suche</button>
             </div>
         </form>
 
 
         {% if applications %}
             <br/> <br/>
-            <p><b>Applications found: {{ counter }}</b></p>
+            <p><b>Applications gefunden: {{ counter }}</b></p>
             <table class="table table-bordered table-hover text-center table-striped" id="applications">
                 <thead class="table-dark">
                     <tr scope="row">
@@ -63,7 +63,7 @@
         {% else %}
             <br/> <br/>
             <div class="alert alert-primary" role="alert">
-                No applications found
+                Keine Applications gefunden
             </div>
         {% endif %}   
     </div>

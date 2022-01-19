@@ -1,13 +1,13 @@
 {% extends 'app_base.html' %} 
 
 {% block title %}
-    <title>ACME IC - My Interfaces</title>
+    <title>ACME IC - Meine Interfaces</title>
 {% endblock title %}
 
 {% block content %}
     <div class="container">
         <br/>
-        <h2>My Interfaces</h2>
+        <h2>Meine Interfaces</h2>
         <br/>
         
         {% if messages %}
@@ -27,15 +27,15 @@
 
         <form role="search" method="get" action=".">
             <div class="d-flex input-group">
-                <input type="search" class="form-control" name="q" id="q" placeholder="Search Interfaces..." value="{{request.GET.q}}">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <input type="search" class="form-control" name="q" id="q" placeholder="Suche Interfaces..." value="{{request.GET.q}}">
+                <button type="submit" class="btn btn-primary">Suche</button>
             </div>
         </form>
 
 
         {% if interfaces %}
             <br/> <br/>
-            <p><b>Interfaces found: {{ counter }}</b></p>
+            <p><b>Interfaces gefunden: {{ counter }}</b></p>
 
             <table class="table table-bordered table-hover text-center table-striped" id="my_interfaces">
                 <thead class="table-dark">
@@ -97,7 +97,7 @@
         {% else %}
             <br/> <br/>
             <div class="alert alert-primary" role="alert">
-                No own Interfaces found
+                Keine eigenen Interfaces gefunden
             </div>
         {% endif %}   
 
@@ -106,7 +106,7 @@
         <form method="POST">
             {% csrf_token %}
             <div class="d-grid gap-2">
-                <a href="{% url 'create_interface' %}" class="btn btn-warning"><b>Create New Interface</b></a>
+                <a href="{% url 'create_interface' %}" class="btn btn-warning"><b>Create Interface</b></a>
             </div>
         </form>
 

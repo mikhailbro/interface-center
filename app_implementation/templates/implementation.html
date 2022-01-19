@@ -44,11 +44,11 @@
                 <th scope="row">Interface Consumers</th>
                 <td>
                     {% if implementation_obj.consumers %}
-                    <dl class="list-group">
-                        {% for consumer in implementation_obj.consumers.all %}
-                            <dd><a href="{% url 'application_details' consumer.id %}">{{consumer}}</a></dd>
-                        {% endfor %}
-                    </dl>
+                        <dl class="list-group">
+                            {% for consumer in implementation_obj.consumers.all %}
+                                <dd><a href="{% url 'application_details' consumer.id %}">{{consumer}}</a></dd>
+                            {% endfor %}
+                        </dl>
                     {% endif %}
                 </td>
             </tr>
@@ -57,7 +57,7 @@
 
         <div class="d-flex p-4">
             <p class="float-right">
-                <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
+                <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
             </p>
         </div>
     </div>

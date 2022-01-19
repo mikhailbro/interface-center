@@ -1,7 +1,7 @@
 {% extends 'app_base.html' %} 
 
 {% block title %}
-    <title>ACME IC - View Application</title>
+    <title>ACME IC - Application</title>
 {% endblock title %}
 
 {% block content %}
@@ -15,28 +15,85 @@
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th scope="row" class="text-center" colspan="2">{{ application_obj }}</th>
+                    <th>APP-ID</th>
+                    <th>{{ application_obj }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                <th scope="row">APP-ID</th>
-                <td>{{ application_obj.app_id }}</td>
+                    <th scope="row">Application Shortname</th>
+                    <td>{{ application_obj.short_name }}</td>
                 </tr>
                 <tr>
-                <th scope="row">Application Shortname</th>
-                <td>{{ application_obj.short_name }}</td>
-                </tr>
-                <tr>
-                <th scope="row">Application Mail</th>
-                <td>{{ application_obj.mail_address }}</td>
+                    <th scope="row">Application Mail</th>
+                    <td>{{ application_obj.mail_address }}</td>
                 </tr>
             </tbody>
         </table>
 
+        {% if owned_interface_objs %}
+            <div class="container">
+                <br/><hr/><hr/><br/>
+            </div>
+            <table class="table table-striped align-middle">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th scope="row">{{ application_obj }} Interfaces</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for interface in owned_interface_objs %}
+                        <tr class="text-center">
+                            <td><a href="{% url 'interface_details' interface.id %}">{{interface}}</a></dd>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if provided_implementation_objs %}
+            <div class="container">
+                <br/><hr/><hr/><br/>
+            </div>
+            <table class="table table-striped align-middle">
+                <thead class="table-info">
+                    <tr class="text-center">
+                        <th scope="row">Bei {{ application_obj }} Provided Implementations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for implementation in provided_implementation_objs %}
+                        <tr class="text-center">
+                            <td><a href="{% url 'implementation_details' implementation.id %}">{{implementation}}</a></dd>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if consumed_implementation_objs %}
+            <div class="container">
+                <br/><hr/><hr/><br/>
+            </div>
+            <table class="table table-striped align-middle">
+                <thead class="table-info">
+                    <tr class="text-center">
+                        <th scope="row">Bei {{ application_obj }} Consumed Implementations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for implementation in consumed_implementation_objs %}
+                        <tr class="text-center">
+                            <td><a href="{% url 'implementation_details' implementation.id %}">{{implementation}}</a></dd>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
         <div class="d-flex p-4">
             <p class="float-right">
-                <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
+                <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
             </p>
         </div>
     </div>

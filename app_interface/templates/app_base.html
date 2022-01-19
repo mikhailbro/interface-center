@@ -36,7 +36,7 @@
                 {% else %}
                     <a class="nav-link" href="{% url 'index' %}">
                 {% endif %}
-                <img width="88" height="38" src="{% static 'images/ic-logo.png' %}"" title="Welcome to ACME Interface Center">
+                <img width="88" height="38" src="{% static 'images/ic-logo.png' %}"" title="Willkommen bei ACME Interface Center">
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-brand">
@@ -50,11 +50,11 @@
                     </div>
                     {% if user.is_authenticated %}
                         <div class="d-flex navbar-nav">
-                            <a class="nav-link" href="{% url 'index' %}">All Interfaces</a>
-                            <a class="nav-link" href="{% url 'my_interfaces' %}">My Interfaces</a>
+                            <a class="nav-link" href="{% url 'index' %}">Alle ACME Interfaces</a>
+                            <a class="nav-link" href="{% url 'my_interfaces' %}">Meine Interfaces</a>
                         </div>
                         <div class="navbar-nav mx-auto">
-                            <a class="nav-link" style="align=right" href="{% url 'applications' %}">ACME Applications</a>
+                            <a class="nav-link" style="align=right" href="{% url 'applications' %}">Alle ACME Applications</a>
                         </div>
                     {% endif %}
                 </div>
@@ -108,7 +108,7 @@
             <br/><br/><br/>
             <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
                 <p class="col-md-4 mb-0 text-muted">&copy; 2022 ACME, Inc</p>
-                <a href="https://www.lipsum.com/" class="nav-link px-2 text-muted" target="_blank"><h5>User Manual</h5></a>
+                <a href="https://www.lipsum.com/" class="nav-link px-2 text-muted" target="_blank"><h5>Benutzeranleitung</h5></a>
             </footer>
           </div>
     </body>

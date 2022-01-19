@@ -26,4 +26,4 @@ class Implementation(models.Model):
 
 
     def __str__(self):
-        return f"{self.interface.interface_id}-{self.implementation_type}-{self.implementation_counter}"
+        return f"{self.interface.interface_id}-{self.implementation_type}-{self.provider}-{self.implementation_counter}"

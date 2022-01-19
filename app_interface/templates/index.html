@@ -12,14 +12,14 @@
 
         <form role="search" method="get" action=".">
             <div class="d-flex input-group">
-                <input type="search" class="form-control" name="q" id="q" placeholder="Search Interfaces..." value="{{request.GET.q}}">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <input type="search" class="form-control" name="q" id="q" placeholder="Suche Interfaces..." value="{{request.GET.q}}">
+                <button type="submit" class="btn btn-primary">Suche</button>
             </div>
         </form>
 
         {% if interfaces %}
             <br/> <br/>
-            <p><b>Interfaces found: {{ counter }}</b></p>
+            <p><b>Interfaces gefunden: {{ counter }}</b></p>
             
             <table class="table table-bordered table-hover text-center table-striped" id="all_interfaces">
                 <thead class="table-dark" >
@@ -55,10 +55,6 @@
                             <!-- 
                             <td scope="col-2"><a href="{% url 'application_details' obj.owner_application.id %}" class="link-info">{{ obj.owner_application }}</a></td>
                             <td scope="col-2">{{ obj.owner.first_name }} {{ obj.owner.last_name }}</td>
-
-                            <td scope="col-3"><a href="{% url 'pending_interface' obj.id %}" class="btn btn-outline-success">&nbsp;&nbsp;Mark Interface pending&nbsp;&nbsp;</a></td>
-                            <td scope="col-1"><a href="{% url 'update_interface' obj.id %}" class="btn btn-warning">Edit Interface</a></td>
-                            <td scope="col-1"><a href="{% url 'delete_interface' obj.id %}" class="btn btn-outline-danger">Delete Interface</a></td>
                             -->
                         </tr>
                     {% endfor %}
@@ -90,7 +86,7 @@
         {% else %}
             <br/> <br/>
             <div class="alert alert-primary" role="alert">
-                No Interfaces found
+                Keine Interfaces gefunden
             </div>
         {% endif %} 
     </div>
