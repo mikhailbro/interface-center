@@ -6,13 +6,21 @@
 
 {% block content %}
     <div class="container">
+        <div class="container">
+            <br/>
+            <div class="row">
+                <div class="col">
+                    <h2>Interface Details</h2>
+                </div>
+                <div class="col">
+                    <p class="float-right">
+                        <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                    </p>
+                </div>
+            </div> 
+        </div>
         <br/>
-        <h2>Interface Details</h2>
-        <br/>
-    </div>
-
-    <div class="container">
-       <table class="table table-striped">
+        <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
                     <th>Interface ID</th>
@@ -142,13 +150,20 @@
                 {% endif %}
             </tbody>
         </table>
-
-
-        <div class="d-flex p-4">
-            <p class="float-right">
-                <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Back</b></button></a>
-            </p>
+        
+        <div class="container">
+            <br/>
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col">
+                    <p class="float-right">
+                        <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                    </p>
+                </div>
+            </div> 
         </div>
+
     </div>
 
 {% endblock content %}

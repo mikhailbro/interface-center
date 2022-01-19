@@ -50,7 +50,7 @@ class Interface(models.Model):
                                 ('A.1 ACME Core', '-A.1 ACME Core'), 
                                 ('A.2 ACME Partner', '- A.2 ACME Partner'), ('A.2.1 ACME Partner Address', '-- A.2.1 ACME Partner Address'), ('A.2.3 ACME Partner Contact', '-- A.2.3 ACME Partner Contact'), 
                                 ('B.1 ACME Contract', '- B.1 ACME Contract'), 
-                                ('B.2 ACME Offer', '- B.2 ACME Offer'), ('B.2.1 ACME Offer Company', '-- B.2.1 ACME Offer Company'),
+                                ('B.2 ACME Offer', '- B.2 ACME Offer'), ('B.2.1 ACME Offer Campaign', '-- B.2.1 ACME Offer Campaign'),
                                 ('C.1 ACME Finance', '- C.1 ACME Finance'), 
                                 ('C.2 ACME Legal & Compliance', '- C.2 ACME Legal & Compliance'), ('C.2.1 ACME Legal', '-- C.2.1 ACME Legal'), ('C.2.2 ACME Compliance', '-- C.2 ACME Compliance'),
                                 ('D.1 ACME Purchasing', '- D.1 ACME Purchasing')]

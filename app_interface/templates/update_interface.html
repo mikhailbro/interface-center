@@ -8,9 +8,31 @@
 {% block content %}
     <div class="container">
         <br/>
-        <h2>Update Interface</h2>
+        <div class="row">
+            <div class="col">
+                <h2>Update Interface</h2>
+            </div>
+            <div class="col">
+                <p class="float-right">
+                    <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a> 
+                </p>
+            </div>
+        </div> 
         <br/>
-
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible fade show
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    alert-success" role="alert">
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    alert-danger" role="alert">
+                {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
         <form method="POST">
             {% csrf_token %}
             {{ interface_obj|crispy }}
@@ -74,8 +96,15 @@
     </div>
     
     <div class="container">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
-        </div>
+        <br/>
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <p class="float-right">
+                    <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+                </p>
+            </div>
+        </div> 
     </div>
 {% endblock content %}

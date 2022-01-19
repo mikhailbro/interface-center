@@ -34,7 +34,7 @@ def create_implementation(request, interface_id):
             interface = request.POST.get('interface')
             instance.save()
 
-            messages.success(request, (f"Implementation is successfully created"))
+            messages.success(request, (f"Implementation '{instance}' wurde erfolgreich angelegt"))
             return redirect('update_interface', interface)
     else:
         interface = Interface.objects.get(pk=interface_id)
@@ -69,7 +69,7 @@ def update_implementation(request, implementation_id):
             interface = request.POST.get('interface')
             instance.save()
 
-            messages.success(request, (f"Implementation is successfully updated"))
+            messages.success(request, (f"Implementation '{instance}' wurde erfolgreich aktualisiert"))
             return redirect('update_interface', interface)
     else:
         implementation = Implementation.objects.get(pk=implementation_id)

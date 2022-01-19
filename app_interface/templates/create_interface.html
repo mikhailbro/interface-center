@@ -8,9 +8,17 @@
 {% block content %}
     <div class="container">
         <br/>
-        <h2>Create Interface</h2>
+        <div class="row">
+            <div class="col">
+                <h2>Create Interface</h2>
+            </div>
+            <div class="col">
+                <p class="float-right">
+                    <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a> 
+                </p>
+            </div>
+        </div> 
         <br/>
-
         <form method="POST">
             {% csrf_token %}
             {{ interface_obj|crispy }}
@@ -23,8 +31,15 @@
     </div>
 
     <div class="container">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
-        </div>
+        <br/>
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <p class="float-right">
+                    <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+                </p>
+            </div>
+        </div> 
     </div>
 {% endblock content %}
