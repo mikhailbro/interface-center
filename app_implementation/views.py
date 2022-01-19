@@ -32,6 +32,11 @@ def create_implementation(request, interface_id):
         if implementation_form.is_valid():
             instance = implementation_form.save(commit=False)
             interface = request.POST.get('interface')
+            provider = request.POST.get('provider')
+
+            # automatic assignment:
+            instance.implementation_counter = create_implementation_counter(interface, provider)
+
             instance.save()
 
             messages.success(request, (f"Implementation '{instance}' wurde erfolgreich angelegt"))
@@ -44,15 +49,14 @@ def create_implementation(request, interface_id):
             'interface': interface, 
             'provider': interface.owner_application,
             'implementation_type': interface.interface_type,
-            'implementation_counter': create_implementation_counter(interface)
         }
         
         implementation_form = ImplementationForm(request.POST or None, initial=init_implementation_form)
         return render(request, 'create_implementation.html', {'implementation_obj': implementation_form, 'interface_obj':interface})
 
-def create_implementation_counter(interface_obj):
-    interface_implementations = Implementation.objects.all().filter(interface=interface_obj)
-    return (len(interface_implementations) + 1)
+def create_implementation_counter(interface_obj, application_obj):
+    interface_implementations = Implementation.objects.all().filter(interface=interface_obj).filter(provider=application_obj)
+    return str(len(interface_implementations) + 1)
 
 
 @login_required

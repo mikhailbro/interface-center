@@ -8,7 +8,6 @@ class ImplementationForm(forms.ModelForm):
        self.fields['interface'].widget.attrs['readonly'] = True
        self.fields['implementation_type'].widget.attrs['readonly'] = True
        self.fields['implementation_counter'].widget.attrs['readonly'] = True
-       self.fields['provider'].widget.attrs['autocomplete'] = 'on'
        
     class Meta:
         model = Implementation
