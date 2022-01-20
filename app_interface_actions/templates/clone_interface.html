@@ -1,0 +1,61 @@
+{% extends 'app_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>ACME IC - Clone Interface</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <br/>
+        <div class="row">
+            <div class="col">
+                <h2>Clone Interface </br> {{ interface_obj }}</h2>
+            </div>
+            <div class="col">
+                <p class="float-right">
+                    <a href="{% url 'index' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a> 
+                </p>
+            </div>
+        </div> 
+        <br/>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible fade show
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    alert-success" role="alert">
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    alert-danger" role="alert">
+                {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ interface_actions_obj|crispy }}
+            <br/>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-danger">Clone</button>
+            </div>
+            <br/>
+        </form>
+        </br>
+    </div>
+
+    <div class="container">
+        <br/>
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <p class="float-right">
+                    <a href="{% url 'my_interfaces' %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+                </p>
+            </div>
+        </div> 
+    </div>
+{% endblock content %}

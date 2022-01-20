@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'app_implementation',
     'app_review',
     'app_user',
+    'app_interface_actions',
+    'app_implementation_actions',
     'crispy_forms',
 
 ]

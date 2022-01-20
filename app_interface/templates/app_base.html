@@ -31,31 +31,24 @@
 
         <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #00008f;">
             <div class="container-fluid">
-                {% if user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'my_interfaces' %}">
-                {% else %}
-                    <a class="nav-link" href="{% url 'index' %}">
-                {% endif %}
-                <img width="88" height="38" src="{% static 'images/ic-logo.png' %}"" title="Willkommen bei ACME Interface Center">
+                <a class="nav-link" href="{% url 'index' %}">
+                    <img width="88" height="38" src="{% static 'images/ic-logo.png' %}"" title="Willkommen bei ACME Interface Center">
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-brand">
-                        {% if user.is_authenticated %}
-                            <a class="nav-link" href="{% url 'my_interfaces' %}" style="color: #8ebf42">
-                        {% else %}
-                            <a class="nav-link" href="{% url 'index' %}" style="color: #8ebf42">
-                        {% endif %}
-                        ACME Interface Center
+                        <a class="nav-link" href="{% url 'index' %}" style="color: #8ebf42">
+                            ACME Interface Center
                         </a>
                     </div>
                     {% if user.is_authenticated %}
-                        <div class="d-flex navbar-nav">
-                            <a class="nav-link" href="{% url 'index' %}">Alle ACME Interfaces</a>
-                            <a class="nav-link" href="{% url 'my_interfaces' %}">Meine Interfaces</a>
-                        </div>
-                        <div class="navbar-nav mx-auto">
-                            <a class="nav-link" style="align=right" href="{% url 'applications' %}">Alle ACME Applications</a>
-                        </div>
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item px-5">
+                                <a class="nav-link" href="{% url 'my_interfaces' %}">Meine Interfaces</a>
+                            </li>
+                            <li class="nav-item px-5">
+                                <a class="nav-link" href="{% url 'applications' %}">ACME Applications</a>
+                            </li>
+                        </ul>
                     {% endif %}
                 </div>
             </div>
@@ -78,7 +71,7 @@
                 </div>
                 -->
                 <div class="d-grid gap-2 col-2">
-                    <a href="{% url 'login' %}" class="container-fluid">
+                    <a href="{% url 'login' %}">
                         <button class="btn btn-success" type="login">Login als Interface Designer</button>
                     </a>
                 </div>

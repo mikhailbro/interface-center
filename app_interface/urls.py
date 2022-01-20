@@ -1,7 +1,5 @@
 from django.urls import path
 from app_interface import views as interface_views
-from app_user import views as users_views
-
 
 urlpatterns = [
     path('', interface_views.my_interfaces, name='my_interfaces'),

@@ -19,15 +19,26 @@
                 </div>
             </div> 
         </div>
+
+        <br/>
+        <nav class="navbar navbar-dark bg-info navbar-expand">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button class="btn btn-sm btn-secondary disabled" type="button">Quality Check</button>
+                </li>
+                <li class="nav-item px-3">
+                    <a href="{% url 'clone_interface' interface_obj.id %}" class="btn btn-sm btn-secondary" type="button">Clone Interface</a>
+                </li>
+            </ul>
+        </nav>
+        
         <br/>
         <table class="table table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th>Interface ID</th>
-                    <th>{{ interface_obj.interface_id }}</th>
-                </tr>
-            </thead>
             <tbody>
+                <tr>
+                    <th style="width: 25%">Interface ID</th>
+                    <td>{{ interface_obj.interface_id }}</td>
+                </tr>
                 <tr>
                     <th scope="row">Interface Name</th>
                     <td>{{ interface_obj.name}}</td>
@@ -77,8 +88,12 @@
                     <td>{{ interface_obj.business_domain }}</td>
                 </tr>
                 <tr>
+                    <th scope="row">Interface Multi Provider</th>
+                    <td>{{ interface_obj.multi_provider }}</td>
+                </tr>
+                <tr>
                     <th scope="row">Interface Origin</th>
-                    <td>{{ interface_obj.model_origin }}</td>
+                    <td>{{ interface_obj.interface_origin }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Interface Version</th>
@@ -125,10 +140,6 @@
                 <tr>
                     <th scope="row">Interface Infoflow Direction</th>
                     <td>{{ interface_obj.infoflow_direction }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Interface Multi Provider</th>
-                    <td>{{ interface_obj.multi_provider }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Owned Interface</th>

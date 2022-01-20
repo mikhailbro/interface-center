@@ -15,7 +15,7 @@ class InterfaceForm(forms.ModelForm):
 
     class Meta:
         model = Interface
-        fields = ['name', 'interface_id', 'owner', 'owner_application', 'status', 'version', 'contract_description', 'description', 'interface_type', 'business_domain', 'owned_interface', 'created_at', 'production_start_at', 'decommissioning_at', 'model_origin', 'info_classification', 'infoflow_direction', 'accessibility', 'communication_pattern', 'multi_provider', 'restriction', 'restriction_text', 'restriction_code']
+        fields = ['name', 'interface_id', 'owner', 'owner_application', 'status', 'version', 'contract_description', 'description', 'interface_type', 'business_domain', 'owned_interface', 'created_at', 'production_start_at', 'decommissioning_at', 'multi_provider', 'interface_origin', 'info_classification', 'infoflow_direction', 'accessibility', 'communication_pattern', 'restriction', 'restriction_text', 'restriction_code']
 
         widgets = {
             'created_at':forms.SelectDateWidget(attrs={'style': 'display: inline-block; width: 33%;'}),

@@ -19,7 +19,7 @@ class Interface(models.Model):
     contract_description = models.URLField(max_length=200, verbose_name='Interface Contract URL', null=True, blank=True, default=None)
     
     restriction = models.BooleanField(default=False)
-    restriction_text = models.TextField(max_length=300, null=True, blank=True, default=None)
+    restriction_text = models.CharField(max_length=150, null=True, blank=True, default=None)
     
     restriction_code_choices = [('NUTZUNG', 'NUTZUNG'), ('TEST', 'TEST')]
     restriction_code = models.CharField(max_length=20, choices=restriction_code_choices, blank=True, null=True, default=None)
@@ -27,8 +27,8 @@ class Interface(models.Model):
     status_choices=[('EINGANG', 'Eingang'), ('ENTWICKLUNG', 'Entwicklung'), ('TEST', 'Test'), ('PRODUKTION', 'Produktion'), ('RUECKZUG', 'Rueckzug'), ('HISTORISCH', 'Historisch'), ('ABGELEHNT', 'Abgelehnt')]
     status = models.CharField( max_length=32, choices=status_choices, default='EINGANG')
 
-    model_origin_choices=[('','---------'), ('CODE', 'Code'), ('CONTRACT', 'Contract'), ('MODEL', 'Model')]
-    model_origin = models.CharField(max_length=10,choices=model_origin_choices, default=None)
+    interface_origin_choices=[('','---------'), ('CODE', 'Code'), ('CONTRACT', 'Contract'), ('MODEL', 'Model')]
+    interface_origin = models.CharField(max_length=10,choices=interface_origin_choices, default=None)
 
     info_classification_choices=[('','---------'), ('PUBLIC', 'Public'), ('INTERNAL', 'Internal'), ('CONFIDENTIONAL', 'Confidentional'), ('SECRET', 'Secret')]
     info_classification = models.CharField(max_length=20, choices=info_classification_choices, default=None)

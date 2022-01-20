@@ -33,6 +33,9 @@ urlpatterns = [
     path('reviews/', include('app_review.urls')),
 
     path('account/', include('app_user.urls')),
+
+    path('interface_actions/', include('app_interface_actions.urls')),
+    path('implementation_actions/', include('app_implementation_actions.urls')),
 ]
 
 # admin.site.site_header = 'ACME Interface Center Administration'

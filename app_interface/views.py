@@ -105,11 +105,11 @@ def create_interface(request):
                 return redirect('my_interfaces')
     else:
         # prefilling:
-        init_implementation_form = {
+        init_interface_form = {
             'owner': request.user
         }
         
-        interface_obj = InterfaceForm(request.POST or None, initial=init_implementation_form)
+        interface_obj = InterfaceForm(request.POST or None, initial=init_interface_form)
         return render(request, 'create_interface.html', {'interface_obj': interface_obj})
 
 
@@ -174,3 +174,4 @@ def validation(interface_obj):
             result = f"Bitte deklariere eine Restriction zu Restriction Code und Restriction Text ein, falls eine Restriction gewünscht ist"
 
     return result
+
