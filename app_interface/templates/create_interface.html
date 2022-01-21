@@ -34,7 +34,7 @@
             {% endfor %}
         {% endif %}
         
-        <form method="POST">
+        <form method="POST" id="form_create">
             {% csrf_token %}
             {{ interface_obj|crispy }}
             <br/>

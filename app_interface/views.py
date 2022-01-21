@@ -85,7 +85,9 @@ def create_interface(request):
             interface_validation = validation(instance)
             if len(interface_validation) > 0:
                 messages.error(request, (interface_validation))
-                return redirect('create_interface')
+                
+                interface_form = InterfaceForm(request.POST or None, instance = instance)
+                return render(request, 'create_interface.html', {'interface_obj': interface_form})
 
             else:    
                 # automatic assignment:
@@ -143,7 +145,12 @@ def update_interface(request, interface_id):
             interface_validation = validation(interface)
             if len(interface_validation) > 0:
                 messages.error(request, (interface_validation))
-                return redirect('update_interface', interface_id)
+                
+                interface_form = InterfaceForm(request.POST or None, instance = instance)
+                review_objs = Review.objects.all().filter(interface=interface)
+                implementation_objs = Implementation.objects.all().filter(interface=interface)
+
+                return render(request, 'update_interface.html', {'interface_obj': interface_form, 'implementation_objs': implementation_objs, 'review_objs': review_objs, 'interface_id': interface_id})
 
             else:    
                 instance.save()
@@ -189,11 +196,11 @@ def validation(interface_obj):
 
     if interface_obj.restriction:
         if (interface_obj.restriction_code is None or len(interface_obj.restriction_code.strip()) == 0 or interface_obj.restriction_text is None or len(interface_obj.restriction_text.strip()) == 0):
-            return f"Bitte trage Restriction Code und Restriction Text ein, falls eine Restriction gewünscht ist"
+            return f"Restriction muss zusammen mit Restriction Code und Restriction Text eingetragen werden"
 
     if not interface_obj.restriction:
         if ((not interface_obj.restriction_code is None and len(interface_obj.restriction_code.strip()) > 0) or (not interface_obj.restriction_text is None and len(interface_obj.restriction_text.strip()) > 0)):
-            return f"Bitte deklariere eine Restriction zu Restriction Code und Restriction Text ein, falls eine Restriction gewünscht ist"
+            return f"Restriction muss zusammen mit Restriction Code und Restriction Text eingetragen werden"
 
 
     return ''
