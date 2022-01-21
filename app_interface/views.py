@@ -99,7 +99,7 @@ def create_interface(request):
 
                 instance.save()
                 messages.success(request, (f"Interface '{instance}' wurde erfolgreich angelegt. Implementations sollen direkt im Interface eingetragen werden."))
-                return redirect('my_interfaces')
+                return redirect('index')
     else:
         # prefilling:
         init_interface_form = {
@@ -148,7 +148,7 @@ def update_interface(request, interface_id):
             else:    
                 instance.save()
                 messages.success(request, (f"Interface '{instance}' wurde erfolgreich aktualisiert"))
-                return redirect('my_interfaces')
+                return redirect('index')
     else:
         interface = Interface.objects.get(pk=interface_id)
         interface_form = InterfaceForm(request.POST or None, instance = interface)
