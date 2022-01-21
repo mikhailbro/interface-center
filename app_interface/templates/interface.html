@@ -47,11 +47,13 @@
                         <a href="{% url 'create_review' interface_obj.id %}" class="btn btn-sm btn-warning text-white" type="button">Create Review</a>
                     </li>
                 {% endif %}
+                {% if user.is_authenticated %}
+                    <li class="nav-item px-3">
+                        <a href="{% url 'clone_interface' interface_obj.id %}" class="btn btn-sm btn-secondary" type="button">Clone Interface</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item px-3">
                     <a href="{% url 'quality_check' interface_obj.id %}" class="btn btn-sm btn-secondary" type="button">Quality Check</a>
-                </li>
-                <li class="nav-item px-3">
-                    <a href="{% url 'clone_interface' interface_obj.id %}" class="btn btn-sm btn-secondary" type="button">Clone Interface</a>
                 </li>
             </ul>
         </nav>

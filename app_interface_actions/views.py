@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from app_interface_actions.forms import InterfaceActionsForm
 from app_interface.models import Interface
@@ -43,7 +44,7 @@ def quality_check(request, interface_id):
     return render(request, 'quality_check.html', {'interface_obj': interface_obj, 'quality_check_obj': quality_check_obj})
 
 
-
+@login_required
 def clone_interface(request, interface_id):
     if request.method == "POST":
         interface_actions_form = InterfaceActionsForm(request.POST or None)
@@ -56,6 +57,7 @@ def clone_interface(request, interface_id):
 
             # CLONE Interface:
             interface.pk = None
+            interface.owner = request.user
             interface.name = instance.name
             interface.interface_id = instance.interface_id
             interface.version = instance.version
