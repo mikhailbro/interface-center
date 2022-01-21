@@ -14,7 +14,7 @@
                 </div>
                 <div class="col">
                     <p class="float-right">
-                        <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                        <a href="{% url 'index' %}"><button type="submit" class="btn btn-primary">Zurück zu ACME Interfaces</b></button></a>
                     </p>
                 </div>
             </div> 
@@ -24,7 +24,7 @@
         <nav class="navbar navbar-dark bg-info navbar-expand">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <button class="btn btn-sm btn-secondary disabled" type="button">Quality Check</button>
+                    <a href="{% url 'quality_check' interface_obj.id %}" class="btn btn-sm btn-secondary" type="button">Quality Check</a>
                 </li>
                 <li class="nav-item px-3">
                     <a href="{% url 'clone_interface' interface_obj.id %}" class="btn btn-sm btn-secondary" type="button">Clone Interface</a>
@@ -169,7 +169,7 @@
                 </div>
                 <div class="col">
                     <p class="float-right">
-                        <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                        <a href="{% url 'index' %}"><button type="submit" class="btn btn-primary">Zurück zu ACME Interfaces</b></button></a>
                     </p>
                 </div>
             </div> 

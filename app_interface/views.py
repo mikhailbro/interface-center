@@ -4,11 +4,8 @@ from django.http import HttpResponse
 from app_interface.models import Interface
 from app_interface.forms import InterfaceForm
 from app_implementation.models import Implementation
-from app_implementation.forms import ImplementationForm
 from app_review.models import Review
-from app_review.forms import ReviewForm
 from app_application.models import Application
-
 
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -70,7 +67,7 @@ def my_interfaces(request):
         counter = my_interfaces.__len__
 
         # Pagination:
-        paginator_my_interfaces = Paginator(my_interfaces, 25)
+        paginator_my_interfaces = Paginator(my_interfaces, 10)
         page = request.GET.get('pg')
         my_interfaces = paginator_my_interfaces.get_page(page)
 
@@ -162,16 +159,41 @@ def update_interface(request, interface_id):
         return render(request, 'update_interface.html', {'interface_obj': interface_form, 'implementation_objs': implementation_objs, 'review_objs': review_objs, 'interface_id': interface_id})
 
 
+
 def validation(interface_obj):
-    result = ''
+    all_interfaces = Interface.objects.all()
+    for idx in range(len(all_interfaces)):
+        if all_interfaces[idx].name == interface_obj.name:
+            return f"Ein Interface mit dem Namen '{interface_obj.name}' ist bereits vorhanden"
+
+
+    name_undescore_position = interface_obj.name.rfind("_")+1
+    if name_undescore_position <= 0:
+        return f"Interface Name '{interface_obj.name}' entspricht nicht den Namenskonventionen, s. Benutzeranleitung unten"
+
+    name_version = interface_obj.name[name_undescore_position:]
+    if int(name_version) != interface_obj.version:
+       return f"Version im Interface Namen stimmt nicht mit der eigentlichen Interface Version überein: '{name_version}' und '{interface_obj.version}'"
+
+
+    if interface_obj.created_at > interface_obj.production_start_at:
+        return f"Produktivstellung kann nicht vor der Interface-Anlage stattfinden"
     
+    if not interface_obj.decommissioning_at is None:
+        if interface_obj.production_start_at > interface_obj.decommissioning_at:
+            return f"Dekommissionierung kann nicht vor der Produktivstellung stattfinden"
+        if interface_obj.created_at > interface_obj.decommissioning_at:
+            return f"Dekommissionierung kann nicht vor der Interface-Anlage stattfinden"
+
+
     if interface_obj.restriction:
         if (interface_obj.restriction_code is None or len(interface_obj.restriction_code.strip()) == 0 or interface_obj.restriction_text is None or len(interface_obj.restriction_text.strip()) == 0):
-            result = f"Bitte trage Restriction Code und Restriction Text ein, falls eine Restriction gewünscht ist"
+            return f"Bitte trage Restriction Code und Restriction Text ein, falls eine Restriction gewünscht ist"
 
     if not interface_obj.restriction:
         if ((not interface_obj.restriction_code is None and len(interface_obj.restriction_code.strip()) > 0) or (not interface_obj.restriction_text is None and len(interface_obj.restriction_text.strip()) > 0)):
-            result = f"Bitte deklariere eine Restriction zu Restriction Code und Restriction Text ein, falls eine Restriction gewünscht ist"
+            return f"Bitte deklariere eine Restriction zu Restriction Code und Restriction Text ein, falls eine Restriction gewünscht ist"
 
-    return result
+
+    return ''
 

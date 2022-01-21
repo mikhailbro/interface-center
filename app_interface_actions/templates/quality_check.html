@@ -1,0 +1,56 @@
+{% extends 'app_base.html' %} 
+
+{% block title %}
+    <title>ACME IC - Quality Check</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="container">
+            <br/>
+            <div class="row">
+                <div class="col">
+                    <h2>Interface Quality Check von </br> {{ interface_obj }}</h2>
+                </div>
+                <div class="col">
+                    <p class="float-right">
+                        <a href="{% url 'interface_details' interface_obj.id %}"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                    </p>
+                </div>
+            </div> 
+        </div>
+        
+        <br/>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th scope="row" style="width: 25%">Interface Status und der Owner</th>
+                    <td>{{ quality_check_obj.interface_status_owner }}</td>
+                </tr>
+                <tr>
+                    <th scope="row" style="width: 25%">Interface Status und die Reviews</th>
+                    <td>{{ quality_check_obj.interface_status_review }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Interface Implementations</th>
+                    <td>{{ quality_check_obj.inteface_implementations }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="container">
+            <br/>
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col">
+                    <p class="float-right">
+                        <a href="{% url 'interface_details' interface_obj.id %}"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                    </p>
+                </div>
+            </div> 
+        </div>
+
+    </div>
+
+{% endblock content %}
