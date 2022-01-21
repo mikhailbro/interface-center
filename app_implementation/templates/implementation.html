@@ -10,11 +10,11 @@
             <br/>
             <div class="row">
                 <div class="col">
-                    <h2>Implementation  Details</h2>
+                    <h2>Implementation Details</h2>
                 </div>
                 <div class="col">
                     <p class="float-right">
-                        <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                        <a href="{% url 'interface_details' implementation_obj.interface.id %}"><button type="submit" class="btn btn-primary">Zurück zum Interface</b></button></a>
                     </p>
                 </div>
             </div> 
@@ -24,6 +24,11 @@
         <br/>
         <nav class="navbar navbar-dark bg-info navbar-expand">
             <ul class="navbar-nav ml-auto">
+                {% if user.username == 'Administrator' or request.user == implementation_obj.interface.owner %} 
+                    <li class="nav-item px-3">
+                        <a href="{% url 'update_implementation' implementation_obj.id %}" class="btn btn-sm btn-danger float-right" type="button">Update Implementation</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <button class="btn btn-sm btn-primary disabled" type="button">Register SM Provider</button>
                 </li>
@@ -48,7 +53,7 @@
             </thead>
             <tbody>
               <tr>
-                <th scope="row">Interface</th>
+                <th scope="row" style="width: 25%">Interface</th>
                 <td><a href="{% url 'interface_details' implementation_obj.interface.id %}" class="link-primary">{{ implementation_obj.interface }}</a></td>
               </tr>
               <tr>
@@ -90,7 +95,7 @@
                 </div>
                 <div class="col">
                     <p class="float-right">
-                        <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                        <a href="{% url 'interface_details' implementation_obj.interface.id %}"><button type="submit" class="btn btn-primary">Zurück zum Interface</b></button></a>
                     </p>
                 </div>
             </div> 

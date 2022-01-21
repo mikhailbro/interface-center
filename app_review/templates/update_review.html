@@ -14,7 +14,7 @@
             </div>
             <div class="col">
                 <p class="float-right">
-                    <a href="javascript:history.back()"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a> 
+                    <a href="{% url 'interface_details' interface_obj.id %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a> 
                 </p>
             </div>
         </div> 
@@ -23,7 +23,7 @@
             {% csrf_token %}
             {{ review_obj|crispy }}
             <br/>
-            <div class="id-grid gap-2">
+            <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-danger">Speichern</button>
             </div>
             <br/>
@@ -37,7 +37,7 @@
             </div>
             <div class="col">
                 <p class="float-right">
-                    <a href="javascript:history.back()"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
+                    <a href="{% url 'interface_details' interface_obj.id %}"><button type="submit" class="btn btn-primary me-md-5">Cancel</button></a>  
                 </p>
             </div>
         </div> 

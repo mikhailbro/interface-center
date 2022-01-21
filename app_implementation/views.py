@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from app_implementation.models import Implementation
 from app_implementation.forms import ImplementationForm
 from app_interface.models import Interface
-from app_interface.forms import InterfaceForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -93,7 +92,7 @@ def update_implementation(request, implementation_id):
     else:
         implementation = Implementation.objects.get(pk=implementation_id)
         implementation_form = ImplementationForm(request.POST or None, instance = implementation)
-        return render(request, 'update_implementation.html', {'implementation_obj': implementation_form, 'interface': implementation.interface})
+        return render(request, 'update_implementation.html', {'implementation_obj': implementation_form, 'interface_obj': implementation.interface})
 
 
 

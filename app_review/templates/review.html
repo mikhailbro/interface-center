@@ -14,21 +14,41 @@
                 </div>
                 <div class="col">
                     <p class="float-right">
-                        <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                        <a href="{% url 'interface_details' review_obj.interface.id %}"><button type="submit" class="btn btn-primary">Zurück zum Interface</b></button></a>
                     </p>
                 </div>
             </div> 
         </div>
         <br/>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible fade show
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    alert-success" role="alert">
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    alert-danger" role="alert">
+                {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th scope="row" class="text-center" colspan="2">{{ review_obj }}</th>
+                    <th scope="row" class="text-center" colspan="2">
+                        {{ review_obj }}
+                        {% if user.username == 'Administrator' %} 
+                            <a href="{% url 'update_review' review_obj.id %}" class="btn btn-sm btn-danger float-right" type="button">Update Review</a>
+                        {% endif %}
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">Interface</th>
+                    <th scope="row" style="width: 25%">Interface</th>
                     <td><a href="{% url 'interface_details' review_obj.interface.id %}" class="link-primary">{{ review_obj.interface }}</a></td>
                 </tr>
                 <tr>
@@ -47,6 +67,10 @@
                     <th scope="row">Review created at</th>
                     <td>{{ review_obj.created_at }}</td>
                 </tr>
+                <tr>
+                    <th scope="row">Review Findings</th>
+                    <td>{{ review_obj.findings }}</td>
+                </tr>
             </tbody>
         </table>
 
@@ -57,7 +81,7 @@
                 </div>
                 <div class="col">
                     <p class="float-right">
-                        <a href="javascript:history.back()"><button type="submit" class="btn btn-primary">Zurück</b></button></a>
+                        <a href="{% url 'interface_details' review_obj.interface.id %}"><button type="submit" class="btn btn-primary">Zurück zum Interface</b></button></a>
                     </p>
                 </div>
             </div> 

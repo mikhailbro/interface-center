@@ -164,7 +164,8 @@ def validation(interface_obj):
     all_interfaces = Interface.objects.all()
     for idx in range(len(all_interfaces)):
         if all_interfaces[idx].name == interface_obj.name:
-            return f"Ein Interface mit dem Namen '{interface_obj.name}' ist bereits vorhanden"
+            if all_interfaces[idx].pk != interface_obj.pk:
+                return f"Ein Interface mit dem Namen '{interface_obj.name}' ist bereits vorhanden"
 
 
     name_undescore_position = interface_obj.name.rfind("_")+1

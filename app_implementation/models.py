@@ -12,17 +12,8 @@ class Implementation(models.Model):
     implementation_counter = models.CharField(max_length=23, default='wird vom Tool vergeben')
     consumers = models.ManyToManyField(Application, blank=True, related_name='consumers')
 
-    class ImplementationTypeEnum(models.TextChoices):
-        API = 'API', ('API')
-        WEB_SERVICE = 'WEB_SERVICE', ('SOAP Web Service')
-        QUEUE = 'QUEUE', ('Queue')
-        FILE_TRANSFER = 'FILE_TRANSFER', ('File Transfer')
-        
-    implementation_type = models.CharField(
-        max_length=20,
-        choices=ImplementationTypeEnum.choices,
-        default=ImplementationTypeEnum.API,
-    )   
+    implementation_type_choices = [('API', 'API'), ('WEB_SERVICE', 'SOAP Web Service'), ('QUEUE', 'Queue'), ('FILE_TRANSFER', 'File Transfer')]
+    implementation_type = models.CharField(max_length=20, choices=implementation_type_choices, default='API')   
 
 
     def __str__(self):
