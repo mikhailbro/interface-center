@@ -31,9 +31,9 @@
                 <tbody>
                     {% for application_obj in applications %}
                         <tr scope="row">
-                            <td scope="col-1"><a href="{% url 'application_details' application_obj.id %}" class="link-info">{{ application_obj.app_id }}</a></td>
-                            <td scope="col-3">{{ application_obj.short_name }}</td>
-                            <td scope="col-1">{{ application_obj.mail_address }}</td>
+                            <td scope="col-1"><a href="{% url 'application_details' application_obj.id %}" class="link-primary">{{ application_obj.app_id }}</a></td>
+                            <td scope="col-3"><a href="{% url 'application_details' application_obj.id %}" class="link-primary">{{ application_obj.short_name }}</td>
+                            <td scope="col-1"><a href="{% url 'application_details' application_obj.id %}" class="link-primary">{{ application_obj.mail_address }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
