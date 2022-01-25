@@ -71,12 +71,8 @@ def clone_interface(request, interface_id):
             if len(interface_validation) > 0:
                 messages.error(request, (interface_validation))
                 
-                clone_obj = {
-                    'interface_id': interface_id,
-                    'interface_title': interface,
-                }
                 interface_clone_form = InterfaceActionsForm(request.POST or None, instance = instance)
-                return render(request, 'clone_interface.html', {'interface_actions_obj': interface_clone_form, 'clone_obj': clone_obj})
+                return render(request, 'clone_interface.html', {'interface_actions_obj': interface_clone_form, 'interface_obj': interface})
 
             else:    
                 interface.save()
