@@ -66,13 +66,13 @@ def clone_interface(request, interface_id):
             interface.created_at = instance.created_at
             interface.production_start_at = instance.production_start_at
 
-             # validation:
+             # Validation:
             interface_validation = validation(interface)
             if len(interface_validation) > 0:
                 messages.error(request, (interface_validation))
                 
                 interface_clone_form = InterfaceActionsForm(request.POST or None, instance = instance)
-                return render(request, 'clone_interface.html', {'interface_actions_obj': interface_clone_form, 'interface_obj': interface})
+                return render(request, 'clone_interface.html', {'interface_actions_obj': interface_clone_form, 'interface_obj': interface, 'interface_id': interface_id})
 
             else:    
                 interface.save()
