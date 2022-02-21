@@ -26,7 +26,7 @@ def index(request):
     counter = all_interfaces.__len__
 
     # Pagination:
-    paginator_all_interfaces = Paginator(all_interfaces, 25)
+    paginator_all_interfaces = Paginator(all_interfaces, 10)
     page = request.GET.get('pg')
     all_interfaces = paginator_all_interfaces.get_page(page)
 
