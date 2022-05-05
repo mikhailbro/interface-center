@@ -25,13 +25,15 @@
                 <thead class="table-dark">
                     <tr scope="row">
                         <th scope="col-2">APP-ID</th>
-                        <th scope="col-5">Short Name</th>
-                        <th scope="col-5">Mail Address</th>
+                        <th scope="col-3">Status</th>
+                        <th scope="col-3">Short Name</th>
+                        <th scope="col-4">Mail Address</th>
                 </thead>
                 <tbody>
                     {% for application_obj in applications %}
                         <tr scope="row">
                             <td scope="col-1"><a href="{% url 'application_details' application_obj.id %}" class="link-primary">{{ application_obj.app_id }}</a></td>
+                            <td scope="col-1"><a href="{% url 'application_details' application_obj.id %}" class="link-primary">{{ application_obj.status }}</a></td>
                             <td scope="col-3"><a href="{% url 'application_details' application_obj.id %}" class="link-primary">{{ application_obj.short_name }}</td>
                             <td scope="col-1"><a href="mailto:{{ application_obj.mail_address }}" class="link-success">{{ application_obj.mail_address }}</td>
                         </tr>

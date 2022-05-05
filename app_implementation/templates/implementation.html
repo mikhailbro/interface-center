@@ -57,20 +57,20 @@
                 <td><a href="{% url 'interface_details' implementation_obj.interface.id %}" class="link-primary">{{ implementation_obj.interface }}</a></td>
               </tr>
               <tr>
-                <th scope="row">Implementation Basepath</th>
-                <td>{{ implementation_obj.provider_basepath }}</td>
+                <th scope="row">Delivery Address</th>
+                <td>{{ implementation_obj.delivery_address }}</td>
               </tr>
               <tr>
                 <th scope="row">Implementation Provider</th>
                 <td><a href="{% url 'application_details' implementation_obj.provider.id %}" class="link-primary">{{ implementation_obj.provider }}</a></td>
               </tr>
               <tr>
-                <th scope="row">Implementation Type</th>
-                <td>{{ implementation_obj.implementation_type }}</td>
+                <th scope="row">Technology Type</th>
+                <td>{{ implementation_obj.technology_type }}</td>
               </tr>
               <tr>
-                <th scope="row">Implementation Counter</th>
-                <td>{{ implementation_obj.implementation_counter }}</td>
+                <th scope="row">Provider Counter</th>
+                <td>{{ implementation_obj.provider_counter }}</td>
               </tr>
 
               <tr>

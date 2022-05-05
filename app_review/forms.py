@@ -12,7 +12,7 @@ class ReviewForm(forms.ModelForm):
        
     class Meta:
         model = Review
-        fields = ['interface', 'review_status', 'requestor', 'reviewer', 'created_at', 'findings']
+        fields = ['interface', 'status', 'requestor', 'reviewer', 'created_at', 'findings']
         
         widgets = {
             'created_at':forms.SelectDateWidget(attrs={'style': 'display: inline-block; width: 33%;'})

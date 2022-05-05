@@ -12,8 +12,8 @@ class Review(models.Model):
     created_at = models.DateField(default=datetime.date.today)
     findings = models.TextField(max_length=500, null=True, blank=True, default=None)
 
-    review_status_choices = [('OPEN', 'OPEN'), ('DONE', 'DONE')]  
-    review_status = models.CharField(max_length=15, choices=review_status_choices, default='OPEN')
+    status_choices = [('OPEN', 'OPEN'), ('DONE', 'DONE')]  
+    status = models.CharField(max_length=15, choices=status_choices, default='OPEN')
 
 
     def __str__(self):

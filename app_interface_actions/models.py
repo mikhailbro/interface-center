@@ -7,10 +7,7 @@ class Interface_Actions(models.Model):
     name = models.CharField(max_length=100)
     version = models.PositiveIntegerField(default=1)
     description = models.TextField(max_length=500, default='')
-    contract_description = models.URLField(max_length=200, verbose_name='Interface Contract URL', null=True, blank=True, default=None)
-    created_at = models.DateField(default=datetime.date.today)
-    production_start_at = models.DateField(default=datetime.date.today)
-
+    doc_link = models.URLField(max_length=200, verbose_name='Doc Link', null=True, blank=True, default=None)
 
     def __str__(self):
         return f"{self.name} ({self.interface_id})"

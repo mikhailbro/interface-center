@@ -45,27 +45,25 @@ def quality_check(request, interface_id):
 
 
 @login_required
-def clone_interface(request, interface_id):
+def clone_interface(request, interface_id ):
     if request.method == "POST":
         interface_actions_form = InterfaceActionsForm(request.POST or None)
         
         if interface_actions_form.is_valid():
             instance = interface_actions_form.save(commit=False)
             
-            interface = Interface.objects.get(pk=interface_id)
+            interface = Interface.objects.get(pk=interface_id )
             implementations = Implementation.objects.all().filter(interface=interface)
 
             # CLONE Interface:
             interface.pk = None
             interface.owner = request.user
             interface.name = instance.name
-            interface.interface_id = instance.interface_id
-            interface.version = instance.version
+            interface.interface_id = instance.interface_id 
+            interface.major_version = instance.major_version
             interface.description = instance.description
-            interface.contract_description = instance.contract_description
-            interface.created_at = instance.created_at
-            interface.production_start_at = instance.production_start_at
-
+            interface.doc_link = instance.doc_link
+            
              # Validation:
             interface_validation = validation(interface)
             if len(interface_validation) > 0:
@@ -90,12 +88,12 @@ def clone_interface(request, interface_id):
 
     else:
         # prefilling:
-        interface = Interface.objects.get(pk=interface_id)
+        interface = Interface.objects.get(pk=interface_id )
         
         init_interface_actions_form = {
             'name': interface.name,
             'interface_id': interface.interface_id,
-            'version': interface.version, 
+            'version': interface.major_version, 
             'description': interface.description, 
         }
 
@@ -119,18 +117,15 @@ def validation(interface_obj):
         return f"Interface Name '{interface_obj.name}' entspricht nicht den Namenskonventionen, s. Benutzeranleitung unten"
 
     name_version = interface_obj.name[name_undescore_position:]
-    if int(name_version) != interface_obj.version:
-       return f"Version im Interface Namen stimmt nicht mit der eigentlichen Interface Version überein: '{name_version}' und '{interface_obj.version}'"
+    if int(name_version) != interface_obj.major_version:
+       return f"Version im Interface Namen stimmt nicht mit der eigentlichen Interface Version überein: '{name_version}' und '{interface_obj.major_version}'"
 
     id_undescore_position = interface_obj.interface_id.find("_")+1
     if id_undescore_position <= 0:
         return f"Interface ID '{interface_obj.interface_id}' entspricht nicht den Namenskonventionen, s. Benutzeranleitung unten"
 
-    id_version = interface_obj.interface_id[id_undescore_position:]
-    if int(id_version) != interface_obj.version:
-       return f"Version in der Interface ID stimmt nicht mit der eigentlichen Interface Version überein: '{id_version}' und '{interface_obj.version}'"   
+    id_version = interface_obj.id[id_undescore_position:]
+    if int(id_version) != interface_obj.major_version:
+       return f"Version in der Interface ID stimmt nicht mit der eigentlichen Interface Version überein: '{id_version}' und '{interface_obj.major_version}'"   
 
-    if interface_obj.created_at > interface_obj.production_start_at:
-        return f"Produktivstellung kann nicht vor der Interface-Anlage stattfinden"
-    
     return ''

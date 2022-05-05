@@ -41,7 +41,7 @@ def create_implementation(request, interface_id):
 
             else:
                 # automatic assignment:
-                instance.implementation_counter = create_implementation_counter(interface, provider)
+                instance.provider_counter = create_implementation_counter(interface, provider)
 
                 instance.save()
 
@@ -53,12 +53,12 @@ def create_implementation(request, interface_id):
         # prefilling:
         init_implementation_form = {
             'interface': interface, 
-            'provider': interface.owner_application,
-            'implementation_type': interface.interface_type,
+            'provider': interface.owner_application
         }
         
         implementation_form = ImplementationForm(request.POST or None, initial=init_implementation_form)
         return render(request, 'create_implementation.html', {'implementation_obj': implementation_form, 'interface_obj':interface})
+
 
 def create_implementation_counter(interface_obj, application_obj):
     interface_implementations = Implementation.objects.all().filter(interface=interface_obj).filter(provider=application_obj)
@@ -99,10 +99,6 @@ def update_implementation(request, implementation_id):
 def validation(implementation_obj, interface_id):
     result = ''
     interface = Interface.objects.get(pk=interface_id)
-
-    if not interface.multi_provider:
-        if interface.owner_application != implementation_obj.provider:
-            result = f"Interface '{interface}' ist kein Multi-Provider Interface! Es darf nur Application '{interface.owner_application}' als Implementation Provider deklariert werden!"
 
     return result
 

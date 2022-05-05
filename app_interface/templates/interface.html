@@ -62,11 +62,11 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <th style="width: 25%">Interface ID</th>
+                    <th style="width: 25%">ID</th>
                     <td>{{ interface_obj.interface_id }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Interface Name</th>
+                    <th scope="row">Name</th>
                     <td>{{ interface_obj.name}}</td>
                 </tr>
                 <tr>
@@ -94,75 +94,47 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">Interface Application Owner</th>
+                    <th scope="row">Application Owner</th>
                     <td><a href="{% url 'application_details' interface_obj.owner_application.id %}">{{ interface_obj.owner_application }}</a></td>
                 </tr>
                 <tr>
-                    <th scope="row">Interface Owner</th>
+                    <th scope="row">Owner</th>
                     <td>{{ interface_obj.owner.first_name }} {{ interface_obj.owner.last_name }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Interface Status</th>
+                    <th scope="row">Status</th>
                     <td>{{ interface_obj.status }}</td>
                 </tr>
-                <tr>
-                    <th scope="row">Interface Type</th>
-                    <td>{{ interface_obj.interface_type }}</td>
+               <tr>
+                    <th scope="row">Domain Name</th>
+                    <td>{{ interface_obj.domain_name }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Interface Business Domain</th>
-                    <td>{{ interface_obj.business_domain }}</td>
+                    <th scope="row">Major Version</th>
+                    <td>{{ interface_obj.major_version }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Interface Multi Provider</th>
-                    <td>{{ interface_obj.multi_provider }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Interface Origin</th>
-                    <td>{{ interface_obj.interface_origin }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Interface Version</th>
-                    <td>{{ interface_obj.version }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Interface Info Classification</th>
+                    <th scope="row">Info Classification</th>
                     <td>{{ interface_obj.info_classification }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Interface Contract URL</th>
+                    <th scope="row">Doc Link</th>
                     <td>
-                        {% if interface_obj.contract_description %}
-                            <a href="{{ interface_obj.contract_description }}" target="_blank">{{ interface_obj.contract_description }}</a>
+                        {% if interface_obj.doc_link %}
+                            <a href="{{ interface_obj.doc_link }}" target="_blank">{{ interface_obj.doc_link }}</a>
                         {% endif %}
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">Interface Description</th>
+                    <th scope="row">Description</th>
                     <td>{{ interface_obj.description }}</td>
                 </tr>
-                <tr>
-                    <th scope="row">Interface Created at</th>
-                    <td>{{ interface_obj.created_at }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Interface Production Started at</th>
-                    <td>{{ interface_obj.production_start_at }}</td>
-                </tr>
-                {% if interface_obj.decommissioning_at %}
+                {% if interface_obj.workend_date %}
                     <tr>
-                        <th scope="row">Interface Decommissioning at</th>
-                        <td>{{ interface_obj.decommissioning_at }}</td>
+                        <th scope="row">Workend Date</th>
+                        <td>{{ interface_obj.workend_date }}</td>
                     </tr>
                 {% endif %}
-                <tr>
-                    <th scope="row">Interface Communication Pattern</th>
-                    <td>{{ interface_obj.communication_pattern }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Interface Accessibility</th>
-                    <td>{{ interface_obj.accessibility }}</td>
-                </tr>
                 <tr>
                     <th scope="row">Interface Infoflow Direction</th>
                     <td>{{ interface_obj.infoflow_direction }}</td>

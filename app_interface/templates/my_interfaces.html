@@ -43,8 +43,7 @@
                         <th scope="col-1">ID</th>
                         <th scope="col-3">Name</th>
                         <th scope="col-1">Status</th>
-                        <th scope="col-2">Type</th>
-                        <th scope="col-2">Contract URL</th>
+                        <th scope="col-2">Doc Link</th>
                         <th scope="col-3">Description</th>
                     </tr>
                 </thead>
@@ -54,11 +53,10 @@
                             <td scope="col-1"><a href="{% url 'update_interface' obj.id %}" class="link-danger">{{ obj.interface_id }}</a></td>
                             <td scope="col-3"><a href="{% url 'update_interface' obj.id %}" class="link-danger">{{ obj.name }}</a></td>
                             <td scope="col-1"><a href="{% url 'update_interface' obj.id %}" class="link-danger">{{ obj.status }}</a></td>
-                            <td scope="col-2"><a href="{% url 'update_interface' obj.id %}" class="link-danger">{{ obj.interface_type }}</a></td>
                             <td scope="col-2">
-                                {% if obj.contract_description %}
-                                    <span class="d-inline-block text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" title="{{ obj.contract_description }}">
-                                        <a href="{{ obj.contract_description }}" class="link-success" target="_blank">{{ obj.contract_description }}</a>
+                                {% if obj.doc_link %}
+                                    <span class="d-inline-block text-truncate" style="max-width: 150px;" data-bs-toggle="tooltip" title="{{ obj.doc_link }}">
+                                        <a href="{{ obj.doc_link }}" class="link-success" target="_blank">{{ obj.doc_link }}</a>
                                     </span>
                                 {% endif %}
                             </td>

@@ -38,9 +38,9 @@
             {% csrf_token %}
             {{implementation_obj.interface|as_crispy_field}}
             {{implementation_obj.provider|as_crispy_field}}
-            {{implementation_obj.implementation_type|as_crispy_field}}
-            {{implementation_obj.provider_basepath|as_crispy_field}}
-            {{implementation_obj.implementation_counter|as_crispy_field}}
+            {{implementation_obj.technology_type|as_crispy_field}}
+            {{implementation_obj.delivery_address|as_crispy_field}}
+            {{implementation_obj.provider_counter|as_crispy_field}}
 
            
             <div class="d-grid gap-2">

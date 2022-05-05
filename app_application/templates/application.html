@@ -27,11 +27,14 @@
                     <td>{{ application_obj }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Application Shortname</th>
+                    <th scope="row">Status</th>
+                    <td>{{ application_obj.status }}</td>
+                <tr>
+                    <th scope="row">Shortname</th>
                     <td>{{ application_obj.short_name }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Application Mail</th>
+                    <th scope="row">Mail Address</th>
                     <td><a href="mailto:{{ application_obj.mail_address }}" class="link-success">{{ application_obj.mail_address }}</a></td>
                 </tr>
             </tbody>
