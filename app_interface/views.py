@@ -122,7 +122,7 @@ def create_interface_id(major_version, name):
     max_existing_id_str = str(max_existing_id).zfill(5)
     major_version_str = str(major_version).zfill(3)
 
-    return f"{type}{max_existing_id_str}_{major_version_str}"
+    return f"I{max_existing_id_str}_{major_version_str}"
 
 
 
