@@ -91,7 +91,7 @@ def create_interface(request):
 
             else:    
                 # automatic assignment:
-                instance.interface_id = create_interface_id('I', instance.major_version, instance.name)
+                instance.interface_id = create_interface_id(instance.major_version, instance.name)
 
                 instance.save()
                 messages.success(request, (f"Interface '{instance}' wurde erfolgreich angelegt. Implementations sollen direkt im Interface eingetragen werden."))
