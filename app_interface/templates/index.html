@@ -37,7 +37,7 @@
             
             <table class="table table-bordered table-hover text-center table-striped" id="all_interfaces">
                 <thead class="table-dark" >
-                    <tr>
+                    <tr scope="row">
                         <th scope="col-1">ID</th>
                         <th scope="col-3">Name</th>
                         <th scope="col-1">Status</th>
@@ -47,7 +47,7 @@
                 </thead>
                 <tbody>
                     {% for obj in interfaces %}
-                        <tr>
+                        <tr scope="row">
                             <td scope="col-1"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.interface_id }}</a></td>
                             <td scope="col-3"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.name }}</a></td>
                             <td scope="col-1"><a href="{% url 'interface_details' obj.id %}" class="link-primary">{{ obj.status }}</a></td>

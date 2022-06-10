@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from app_interface import views as interface_views
 
 
