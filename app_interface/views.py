@@ -125,7 +125,6 @@ def create_interface_id(major_version, name):
     return f"I{max_existing_id_str}_{major_version_str}"
 
 
-
 @login_required
 def update_interface(request, interface_id):
     if request.method == "POST":
@@ -159,7 +158,6 @@ def update_interface(request, interface_id):
         return render(request, 'update_interface.html', {'interface_obj': interface_form, 'implementation_objs': implementation_objs, 'review_objs': review_objs, 'interface_id': interface_id})
 
 
-
 def validation(interface_obj):
     all_interfaces = Interface.objects.all()
     for idx in range(len(all_interfaces)):
@@ -186,4 +184,3 @@ def validation(interface_obj):
 
 
     return ''
-
