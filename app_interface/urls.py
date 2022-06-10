@@ -1,5 +1,6 @@
-from django.urls import path
+from django.urls import path, include
 from app_interface import views as interface_views
+
 
 urlpatterns = [
     path('my_interfaces', interface_views.my_interfaces, name='my_interfaces'),

@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
+from rest_framework import viewsets
+from rest_framework import permissions
+from app_interface.serializers import InterfaceSerializer, UserSerializer
+
 from app_interface.models import Interface
 from app_interface.forms import InterfaceForm
 from app_implementation.models import Implementation
 from app_review.models import Review
 from app_application.models import Application
+from django.contrib.auth.models import User
 
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -182,5 +187,22 @@ def validation(interface_obj):
         if ((not interface_obj.restriction_code is None and len(interface_obj.restriction_code.strip()) > 0) or (not interface_obj.restriction_text is None and len(interface_obj.restriction_text.strip()) > 0)):
             return f"Restriction muss zusammen mit Restriction Code und Restriction Text eingetragen werden"
 
-
     return ''
+
+
+class InterfaceViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows interfaces to be viewed or edited.
+    """
+    queryset = Interface.objects.all().order_by('interface_id')
+    serializer_class = InterfaceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows interfaces to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]

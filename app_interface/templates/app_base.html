@@ -36,7 +36,7 @@
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-brand">
-                        <a class="nav-link" href="{% url 'index' %}" style="color: #8ebf42">
+                        <a class="nav-link" href="{% url 'index' %}" style="color: #fff">
                             ACME Interface Center
                         </a>
                     </div>
@@ -55,7 +55,7 @@
                     {% if user.is_authenticated %}
                         <ul class="navbar-nav mx-auto">
                             <li class="nav-item px-5">
-                                <a class="nav-link bg-danger" href="{% url 'my_interfaces' %}">Meine Interfaces</a>
+                                <a class="nav-link" href="{% url 'my_interfaces' %}">Meine Interfaces</a>
                             </li>
                         </ul>
                     {% endif %}
