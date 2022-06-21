@@ -22,6 +22,13 @@ from app_application import views as application_views
 from app_review import views as review_views
 from app_user import views as user_views
 
+from rest_framework import routers
+
+
+router = routers.DefaultRouter()
+router.register(r'interfaces', interface_views.InterfaceViewSet)
+router.register(r'users', interface_views.UserViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -36,6 +43,9 @@ urlpatterns = [
 
     path('interface_actions/', include('app_interface_actions.urls')),
     path('implementation_actions/', include('app_implementation_actions.urls')),
+
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 # admin.site.site_header = 'ACME Interface Center Administration'

@@ -1,6 +1,7 @@
 from django.urls import path
 from app_interface import views as interface_views
 
+
 urlpatterns = [
     path('my_interfaces', interface_views.my_interfaces, name='my_interfaces'),
     path('interface/<interface_id>', interface_views.interface_details, name='interface_details'),
